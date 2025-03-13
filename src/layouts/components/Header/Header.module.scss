@@ -1,0 +1,25 @@
+.nav_item {
+    color: black !important;
+    background-color: transparent;
+    margin-inline: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 120px;
+    text-align: center;
+    transition: background-color 0.3s, color 0.1s;
+
+    &:hover {
+        color: white !important;
+        background-color: #ee4c85;
+    }
+}
+
+.no_focus_border:focus {
+    box-shadow: none !important;
+    border: 1px solid #ced4da !important;
+}
+
+.focusPage {
+    color: black !important;
+    background-color: #ffffff !important;
+}
