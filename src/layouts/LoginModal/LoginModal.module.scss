@@ -1,0 +1,33 @@
+.btnContinue {
+    margin-top: 12px;
+    width: 100%;
+    border: none;
+    color: white;
+    background-color: #ee4c85;
+
+    &:hover {
+        color: white !important;
+        background-color: #f475a2;
+    }
+}
+
+.btnContinueWith {
+    border: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #e8ecef;
+
+    &:hover {
+        color: white !important;
+        background-color: #0d6efd;
+    }
+}
+
+.btnClose {
+    font-size: 24px;
+    &:hover {
+        color: #dc3545 !important;
+        cursor: pointer;
+    }
+}

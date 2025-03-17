@@ -1,9 +1,14 @@
-import { Button, Container, Form, InputGroup, Modal, Nav, Navbar, NavLink } from 'react-bootstrap';
+import { Button, Container, Form, InputGroup, Nav, Navbar, NavLink } from 'react-bootstrap';
 import styles from './Header.module.scss';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const loc = useLocation();
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        navigate('/login');
+    };
 
     return (
         <div>
@@ -52,10 +57,14 @@ const Header = () => {
                     </Navbar.Collapse>
                 </Container>
                 <div className="d-flex gap-2 me-5">
-                    <Button style={{ backgroundColor: '#f1f1f1', color: '#ee4c85' }} className="px-3 py-2">
+                    <Button
+                        onClick={handleLogin}
+                        style={{ backgroundColor: '#f1f1f1', color: '#ee4c85' }}
+                        className={styles.btn}
+                    >
                         Login
                     </Button>
-                    <Button style={{ backgroundColor: '#ee4c85', color: 'white' }} className="px-3 py-2">
+                    <Button style={{ backgroundColor: '#ee4c85', color: 'white' }} className={styles.btn}>
                         Subscribe
                     </Button>
                 </div>

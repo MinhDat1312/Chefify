@@ -1,0 +1,151 @@
+.loginContainer {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    width: 900px !important;
+    min-height: 500px !important;
+
+    h2 {
+        width: 416px;
+    }
+
+    .button {
+        border: none;
+        color: white;
+        background-color: #ee4c85;
+
+        &:hover {
+            color: white !important;
+            background-color: #f475a2;
+        }
+    }
+
+    .buttonLogo {
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #e8ecef;
+        width: 90px;
+        height: 40px;
+        border-radius: 40px;
+        padding-left: 20px;
+
+        &:hover {
+            color: white !important;
+            background-color: #f475a2 !important;
+        }
+    }
+
+    .loginCard {
+        width: 60%;
+        max-width: 500px;
+        padding: 40px 10px 40px 5px;
+        z-index: 2;
+    }
+
+    .signupCard {
+        width: 60%;
+        opacity: 0;
+        max-width: 500px;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    .signupCard,
+    .loginCard {
+        position: absolute;
+        top: 15px;
+        height: 100%;
+        border: none !important;
+        box-shadow: none !important;
+        transition: all 0.6s ease-in-out;
+    }
+
+    .toggle_container {
+        position: absolute;
+        top: 0;
+        left: 54%;
+        width: 500px;
+        height: 100%;
+        overflow: hidden;
+        transition: all 0.6s ease-in-out;
+        border-radius: 100px 0 0 100px;
+        z-index: 1000;
+
+        .toggle {
+            background-color: #f44b86;
+            height: 100%;
+            background: linear-gradient(to right, #ff8eb3, #f44b86);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+
+            .toggle_panel {
+                position: absolute;
+                width: 30%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                padding: 0 30px;
+                text-align: center;
+                top: 0;
+                transform: translateX(0);
+                transition: all 0.6s ease-in-out;
+            }
+
+            .toggle_left {
+                left: 140px;
+                transform: translateX(0);
+            }
+
+            .toggle_right {
+                right: 140px;
+                transform: translateX(0);
+            }
+        }
+    }
+
+    &.active {
+        .loginCard {
+            transform: translateX(82%);
+        }
+
+        .signupCard {
+            transform: translateX(82%);
+            opacity: 1;
+            z-index: 5;
+            animation: move 0.6s;
+        }
+
+        .toggle_container {
+            transform: translateX(-115%);
+            border-radius: 0 100px 100px 0;
+        }
+
+        .toggle {
+            transform: translateX(50%);
+        }
+    }
+}
+
+@keyframes move {
+    0%,
+    49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    50%,
+    100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
