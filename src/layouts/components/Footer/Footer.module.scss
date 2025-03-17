@@ -1,0 +1,50 @@
+.footer {
+    background-color: #18191c;
+    color: #ffffff;
+    padding: 40px;
+    font-size: 14px;
+
+    .subscribeForm {
+        display: flex;
+        gap: 10px;
+
+        input {
+            width: 420px;
+            padding: 0px 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #f44b86;
+            border: none;
+            padding: 10px 15px;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #f475a2;
+            }
+        }
+    }
+
+    .footerLinks {
+        list-style: none;
+        padding: 0;
+        font-weight: 500;
+
+        li {
+            margin-top: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #dee2e8;
+
+            &:hover {
+                color: #f44b86;
+            }
+        }
+    }
+}

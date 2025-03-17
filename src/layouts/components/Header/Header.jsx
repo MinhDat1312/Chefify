@@ -22,6 +22,7 @@ const Header = () => {
                 <Container className="px-0 ms-5 me-0">
                     <Navbar.Brand style={{ cursor: 'pointer' }}>
                         <img
+                            onClick={() => navigate('/')}
                             src="/src/assets/images/Group 9.png"
                             className="d-inline-block align-top"
                             alt="Chefify logo"
