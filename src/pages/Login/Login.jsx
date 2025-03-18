@@ -8,31 +8,98 @@ import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import CheckBox from '../../layouts/components/CheckBox/CheckBox';
 
+let checkSubmit = 0;
+
 const Login = () => {
+    const { login, setLogin, users, setUsers } = useContext(ChefifyConText);
     const [formLogin, setFormLogin] = useState({
-        username: '',
-        passwordLogin: '',
+        username: {
+            firstName: '',
+            lastName: '',
+        },
+        email: '',
+        password: '',
     });
+    const [submit, setSubmit] = useState(false);
+    const [fail, setFail] = useState(false);
     const containerRef = useRef();
     const navigate = useNavigate();
-    const { submitted, setSubmitted, stateButtonLogin, setStateButtonLogin } = useContext(ChefifyConText);
 
     const handleLogin = (e) => {
+        checkSubmit = 2;
         e.preventDefault();
-        setStateButtonLogin(true);
-        if (formLogin.username != '' && formLogin.passwordLogin != '') {
+        const checkUserName = users.some(
+            (users) => formLogin.firstName == users.firstName && formLogin.lastName == users.lastName,
+        );
+        const checkEmail = users.some((users) => formLogin.email == users.email);
+        const checkPassword = users.some((users) => formLogin.password == users.password);
+        if (checkUserName && checkEmail && checkPassword) {
             navigate('/');
-            setSubmitted(true);
-            setStateButtonLogin(false);
+            setLogin(true);
         } else {
-            setSubmitted(false);
-            setTimeout(() => setStateButtonLogin(false), 3000);
+            setLogin(false);
+            setSubmit(true);
+            setTimeout(() => {
+                checkSubmit = 0;
+                setSubmit(false);
+            }, 3000);
         }
+    };
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+        checkSubmit = 1;
+        setSubmit(true);
+        if (users.some((user) => user.email == formLogin.email)) {
+            setFail(true);
+        } else {
+            setFail(false);
+            setUsers([...users, { id: Date.now(), ...formLogin }]);
+            setFormLogin({
+                username: {
+                    firstName: '',
+                    lastName: '',
+                },
+                email: '',
+                password: '',
+            });
+            containerRef.current.classList.remove(styles.active);
+        }
+        setTimeout(() => {
+            checkSubmit = 0;
+            setSubmit(false);
+        }, 3000);
     };
 
     const handleChangeLogin = (e) => {
         const { name, value } = e.target;
-        setFormLogin({ ...formLogin, [name]: value });
+
+        setFormLogin((prev) => {
+            const keys = name.split('.');
+            if (keys.length == 1) {
+                if (name === 'username') {
+                    const names = value.split(' ');
+                    const firstName = names[0];
+                    const lastName = names.slice(1).join(' ');
+                    return {
+                        ...prev,
+                        username: {
+                            firstName: firstName,
+                            lastName: lastName,
+                        },
+                    };
+                } else return { ...prev, [name]: value };
+            } else if (keys.length == 2) {
+                return {
+                    ...prev,
+                    [keys[0]]: {
+                        ...prev[keys[0]],
+                        [keys[1]]: value,
+                    },
+                };
+            }
+            return prev;
+        });
     };
 
     const handleChangeSignUp = () => {
@@ -49,7 +116,7 @@ const Login = () => {
 
     return (
         <div className="py-5 mt-5">
-            {stateButtonLogin && !submitted && (
+            {submit && !login && checkSubmit == 2 && (
                 <div
                     style={{
                         position: 'fixed',
@@ -59,11 +126,31 @@ const Login = () => {
                         zIndex: 10000,
                     }}
                 >
-                    <Toast onClose={() => setStateButtonLogin(false)}>
+                    <Toast onClose={() => setSubmit(false)}>
                         <Toast.Header>
                             <strong className="me-auto text-danger">Notify</strong>
                         </Toast.Header>
                         <Toast.Body className="bg-danger text-white">Login failed</Toast.Body>
+                    </Toast>
+                </div>
+            )}
+            {submit && checkSubmit == 1 && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: '0%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        zIndex: 10000,
+                    }}
+                >
+                    <Toast onClose={() => setSubmit(false)}>
+                        <Toast.Header>
+                            <strong className={`me-auto ${fail ? 'text-danger' : 'text-success'}`}>Notify</strong>
+                        </Toast.Header>
+                        <Toast.Body className={`${fail ? 'bg-danger' : 'bg-success'} text-white`}>
+                            {fail ? 'Sign up failed or Same an account' : 'Sign up succeed'}
+                        </Toast.Body>
                     </Toast>
                 </div>
             )}
@@ -77,18 +164,21 @@ const Login = () => {
                                 id="username"
                                 placeholder="nguyen thang minh dat"
                                 labelName="Full name"
+                                change={handleChangeLogin}
                             />
                             <InputFloating
                                 type="email"
                                 id="email"
                                 placeholder="example.email@gmail.com"
                                 labelName="Email"
+                                change={handleChangeLogin}
                             />
                             <InputFloating
                                 type="password"
                                 id="password"
                                 placeholder="Enter at least 8+ characters"
                                 labelName="Password"
+                                change={handleChangeLogin}
                             />
                             <Button
                                 variant="primary"
@@ -120,19 +210,23 @@ const Login = () => {
                 <Card className={styles.signupCard}>
                     <Card.Body style={{ paddingRight: '44px' }}>
                         <h2 className="text-center mb-4 fw-bold">Sign up</h2>
-                        <Form onSubmit={handleLogin} className="d-flex flex-column gap-3">
+                        <Form onSubmit={handleSignup} className="d-flex flex-column gap-3">
                             <div className="d-flex gap-3" style={{ width: '416px' }}>
                                 <InputFloating
                                     type="text"
-                                    id="fname"
+                                    id="username.firstName"
                                     placeholder="Input first name"
                                     labelName="First name"
+                                    value={formLogin.username.firstName}
+                                    change={handleChangeLogin}
                                 />
                                 <InputFloating
                                     type="text"
-                                    id="lname"
+                                    id="username.lastName"
                                     placeholder="Input last name"
                                     labelName="Last name"
+                                    value={formLogin.username.lastName}
+                                    change={handleChangeLogin}
                                 />
                             </div>
                             <InputFloating
@@ -140,12 +234,16 @@ const Login = () => {
                                 id="emailSignup"
                                 placeholder="example.email@gmail.com"
                                 labelName="Email"
+                                value={formLogin.email}
+                                change={handleChangeLogin}
                             />
                             <InputFloating
                                 type="password"
                                 id="passwordSignup"
                                 placeholder="Enter at least 8+ characters"
                                 labelName="Password"
+                                value={formLogin.password}
+                                change={handleChangeLogin}
                             />
                             <div className="d-flex gap-3">
                                 <CheckBox type={'checkbox'} id={'checkAgree'} />

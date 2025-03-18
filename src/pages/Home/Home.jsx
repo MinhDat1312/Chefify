@@ -6,7 +6,7 @@ import { ChefifyConText } from '../../ChefifyContext';
 
 const Home = () => {
     const [showModalPro, setShowModalPro] = useState(true);
-    const { loginModal, setLoginModal } = useContext(ChefifyConText);
+    const { loginModal, setLoginModal, login } = useContext(ChefifyConText);
     const [index, setIndex] = useState(0);
 
     const handleNextSlide = () => {
@@ -20,7 +20,7 @@ const Home = () => {
     return (
         <div style={{ marginTop: '68px' }}>
             <img src="/src/assets/images/Image 73.png" className="w-100" />
-            {showModalPro && (
+            {showModalPro && !login && (
                 <Modal show={showModalPro} onHide={() => setShowModalPro(false)} size="lg">
                     <Modal.Header closeButton className="border-bottom-0"></Modal.Header>
                     <Modal.Body>
@@ -84,7 +84,7 @@ const Home = () => {
                     </Modal.Body>
                 </Modal>
             )}
-            {loginModal && <LoginModal />}
+            {loginModal && !login && <LoginModal />}
         </div>
     );
 };
