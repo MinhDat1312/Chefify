@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Italian-style tomato salad",
+        "image": "Italian-style tomato"
+    },
+    {
+        "id": 2,
+        "name": "Spaghetti with vegetables and shrimp",
+        "image": "Vegetable and shrimp spaghetti"
+    },
+    {
+        "id": 3,
+        "name": "Lotus delight salad",
+        "image": "Lotus delight salad"
+    },
+    {
+        "id": 4,
+        "name": "Snack cakes",
+        "image": "Snack cakes"
+    },
+    {
+        "id": 5,
+        "name": "Salad with cabbage and shrimp",
+        "image": "Salad with cabbage"
+    },
+    {
+        "id": 6,
+        "name": "Salad of cove beans, shrimp and potatoes",
+        "image": "Bean, shrimp, and potato salad"
+    },
+    {
+        "id": 7,
+        "name": "Sunny-side up fried eggs",
+        "image": "Sunny-side up fried eggs"
+    },
+    {
+        "id": 8,
+        "name": "Lotus delight salad",
+        "image": "Lotus delight salad_01"
+    }
+]

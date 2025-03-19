@@ -1,0 +1,45 @@
+.card {
+    padding: 0;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .cardBody {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        .btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #f24c86;
+            background-color: transparent;
+
+            &:hover,
+            &:active {
+                opacity: 0.5 !important;
+                background-color: transparent !important;
+                border: 2px solid #f24c86 !important;
+            }
+        }
+
+        .cardMinute {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            padding: 2px 4px;
+            border-radius: 20px;
+            text-align: center;
+            background-color: #fff0f5;
+            font-size: 16px;
+            color: #f24c86;
+        }
+    }
+}

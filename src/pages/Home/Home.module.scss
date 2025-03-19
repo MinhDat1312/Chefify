@@ -1,1 +1,39 @@
+.card {
+    position: absolute;
+    top: 280px;
+    left: 150px;
+    width: 374px;
+    padding: 30px;
+    border: 2px dashed #8152e9;
 
+    .cardBody {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        margin-top: 16px;
+    }
+
+    .btn {
+        border: none;
+        padding: 10px;
+        text-align: center;
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+
+    .cardNote {
+        position: absolute;
+        top: -24px;
+        left: 50px;
+        padding: 10px 75px;
+        border-radius: 8px;
+        text-align: center;
+        background-color: #ffc316;
+        font-size: 16px;
+        color: #624500;
+    }
+}
