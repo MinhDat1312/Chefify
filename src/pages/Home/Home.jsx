@@ -5,6 +5,8 @@ import LoginModal from '../../layouts/LoginModal/LoginModal';
 import { ChefifyConText } from '../../ChefifyContext';
 import { FaArrowRight } from 'react-icons/fa';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
+import EditorsLayout from '../../layouts/EditorsLayout/EditorsLayout';
+import { motion } from 'framer-motion';
 
 const Home = () => {
     const [showModalPro, setShowModalPro] = useState(true);
@@ -30,40 +32,48 @@ const Home = () => {
                     height: '150vh',
                 }}
             >
-                <Card className={styles.card}>
-                    <Card.Body className={styles.cardBody}>
-                        <Card.Title style={{ color: '#f24c86' }} className="fw-bold text-center">
-                            Salad Caprese
-                        </Card.Title>
-                        <Card.Text style={{ fontSize: '14px' }} className="text-center mt-2">
-                            Classic Italian Salad Caprese: ripe tomatoes, fresh mozzarella, herbs, olive oil, and
-                            balsamic vinegar create a refreshing dish for lunch or appetizer.
-                        </Card.Text>
-                        <div className="d-flex flex-column gap-3 justify-content-center align-items-center mt-5">
-                            <div className="d-flex flex-column justify-content-center align-items-center">
-                                <img src="/src/assets/images/Avatar 19.png" style={{ width: '50px' }} />
-                                <span style={{ color: '#5f646f' }} className="fw-medium">
-                                    Salad Caprese
-                                </span>
+                <motion.div
+                    initial={{ x: -100, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <Card className={styles.card}>
+                        <Card.Body className={styles.cardBody}>
+                            <Card.Title style={{ color: '#f24c86' }} className="fw-bold text-center">
+                                Salad Caprese
+                            </Card.Title>
+                            <Card.Text style={{ fontSize: '14px' }} className="text-center mt-2">
+                                Classic Italian Salad Caprese: ripe tomatoes, fresh mozzarella, herbs, olive oil, and
+                                balsamic vinegar create a refreshing dish for lunch or appetizer.
+                            </Card.Text>
+                            <div className="d-flex flex-column gap-3 justify-content-center align-items-center mt-5">
+                                <div className="d-flex flex-column justify-content-center align-items-center">
+                                    <img src="/src/assets/images/Avatar 19.png" style={{ width: '50px' }} />
+                                    <span style={{ color: '#5f646f' }} className="fw-medium">
+                                        Salad Caprese
+                                    </span>
+                                </div>
+                                <Button
+                                    style={{
+                                        backgroundColor: '#f24c86',
+                                    }}
+                                    className={styles.btn}
+                                >
+                                    View now <FaArrowRight />
+                                </Button>
                             </div>
-                            <Button
-                                style={{
-                                    backgroundColor: '#f24c86',
-                                }}
-                                className={styles.btn}
-                            >
-                                View now <FaArrowRight />
-                            </Button>
+                        </Card.Body>
+                        <div className={styles.cardNote}>
+                            <span>Recipe of the day</span>
                         </div>
-                    </Card.Body>
-                    <div className={styles.cardNote}>
-                        <span>Recipe of the day</span>
-                    </div>
-                </Card>
+                    </Card>
+                </motion.div>
             </div>
             <div className="d-flex flex-column">
                 <RecipeLayout type={'Summer'} />
                 <RecipeLayout type={'Videos'} />
+                <EditorsLayout />
             </div>
             {showModalPro && !login && (
                 <Modal show={showModalPro} onHide={() => setShowModalPro(false)} size="lg">

@@ -1,0 +1,40 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 28px;
+    padding: 16px;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f24c86;
+        background-color: transparent;
+
+        &:hover,
+        &:active {
+            opacity: 0.5 !important;
+            background-color: transparent !important;
+            border: 2px solid #f24c86 !important;
+        }
+    }
+
+    .paragraph {
+        width: 320px;
+        margin-top: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
