@@ -4,6 +4,7 @@ import Footer from './layouts/components/Footer/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import RecipeBox from './pages/RecipeBox/RecipeBox';
+import CookingGuide from './pages/CookingGuide/CookingGuide';
 
 function App() {
     return (
@@ -13,7 +14,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/recipe_box" element={<RecipeBox />} />
-                <Route path="" />
+                <Route path="/cooking_guide" element={<CookingGuide />} />
                 <Route path="" />
             </Routes>
             <Footer />
