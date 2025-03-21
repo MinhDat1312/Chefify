@@ -1,0 +1,49 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background-color: #f24c86;
+
+    &:hover,
+    &:active {
+        opacity: 0.5 !important;
+        background-color: #f24c86 !important;
+    }
+}
+
+.tabContainer {
+    max-width: 100rem;
+    width: 100%;
+    margin-top: 64px;
+
+    ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        margin-bottom: 48px;
+        border-bottom: 2px solid #e0e1e6;
+
+        li {
+            font-size: 16px;
+            font-weight: 400;
+            padding: 16px 8px;
+            text-align: center;
+            color: #5d6168;
+            background-color: #ffffff;
+            border-radius: 16px 16px 0 0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+
+            &.active {
+                background-color: #fff0f5;
+                color: #f24c86;
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import recipe from '../../data/recipes.json';
 import { useContext, useState } from 'react';
 import { Button, Card, Carousel, Modal } from 'react-bootstrap';
 import styles from './Home.module.scss';
@@ -5,7 +6,6 @@ import LoginModal from '../../layouts/LoginModal/LoginModal';
 import { ChefifyConText } from '../../ChefifyContext';
 import { FaArrowRight } from 'react-icons/fa';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
-import EditorsLayout from '../../layouts/EditorsLayout/EditorsLayout';
 import { motion } from 'framer-motion';
 
 const Home = () => {
@@ -55,6 +55,7 @@ const Home = () => {
                                     </span>
                                 </div>
                                 <Button
+                                    onClick={() => setShowModalPro(true)}
                                     style={{
                                         backgroundColor: '#f24c86',
                                     }}
@@ -71,11 +72,11 @@ const Home = () => {
                 </motion.div>
             </div>
             <div className="d-flex flex-column">
-                <RecipeLayout type={'Summer'} />
-                <RecipeLayout type={'Videos'} />
-                <EditorsLayout />
+                <RecipeLayout type={'Summer'} recipes={recipe.slice(0, 4)} />
+                <RecipeLayout type={'Videos'} recipes={recipe.slice(4, 8)} />
+                <RecipeLayout type={'Editors'} recipes={recipe.slice(8, 12)} />
             </div>
-            {showModalPro && !login && (
+            {showModalPro && (
                 <Modal show={showModalPro} onHide={() => setShowModalPro(false)} size="lg">
                     <Modal.Header closeButton className="border-bottom-0"></Modal.Header>
                     <Modal.Body>

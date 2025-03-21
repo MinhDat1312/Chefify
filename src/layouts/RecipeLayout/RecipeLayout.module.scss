@@ -21,11 +21,17 @@
             border-radius: 50%;
             border: 2px solid #f24c86;
             background-color: transparent;
+            color: #f24c86;
 
-            &:hover,
-            &:active {
+            &:hover {
                 opacity: 0.5 !important;
                 background-color: transparent !important;
+                border: 2px solid #f24c86 !important;
+            }
+
+            &.active {
+                background-color: #f24c86 !important;
+                color: white;
                 border: 2px solid #f24c86 !important;
             }
         }
@@ -33,7 +39,7 @@
         .cardMinute {
             position: absolute;
             bottom: 15px;
-            right: 15px;
+            left: 15px;
             padding: 2px 4px;
             border-radius: 20px;
             text-align: center;
@@ -41,5 +47,52 @@
             font-size: 16px;
             color: #f24c86;
         }
+    }
+}
+
+.cardEditor {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 28px;
+    padding: 16px;
+
+    &:hover {
+        transform: scale(1.1);
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .btnEditor {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f24c86;
+        background-color: transparent;
+        color: #f24c86;
+
+        &:hover {
+            opacity: 0.5 !important;
+            background-color: transparent !important;
+            border: 2px solid #f24c86 !important;
+        }
+
+        &.activeEditor {
+            background-color: #f24c86 !important;
+            color: white;
+            border: 2px solid #f24c86 !important;
+        }
+    }
+
+    .paragraphEditor {
+        width: 320px;
+        margin-top: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

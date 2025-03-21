@@ -3,6 +3,7 @@ import Header from './layouts/components/Header/Header';
 import Footer from './layouts/components/Footer/Footer';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
+import RecipeBox from './pages/RecipeBox/RecipeBox';
 
 function App() {
     return (
@@ -11,7 +12,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="" />
+                <Route path="/recipe_box" element={<RecipeBox />} />
                 <Route path="" />
                 <Route path="" />
             </Routes>

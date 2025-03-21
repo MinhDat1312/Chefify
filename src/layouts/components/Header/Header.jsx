@@ -19,7 +19,7 @@ const Header = () => {
                 variant="dark"
                 expand="lg"
                 fixed="top"
-                className="justify-content-between bg-white"
+                className="justify-content-between bg-white shadow-sm"
                 style={{ zIndex: '1000' }}
             >
                 <Container className="px-0 ms-5 me-0">
@@ -64,6 +64,7 @@ const Header = () => {
                     {login ? (
                         <>
                             <Button
+                                onClick={() => navigate('/recipe_box')}
                                 style={{
                                     backgroundColor: '#fff0f5',
                                     color: '#ee4c85',
