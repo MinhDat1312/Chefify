@@ -2,7 +2,7 @@ import { Button, Col, Container, Row, Tab, Tabs } from 'react-bootstrap';
 import styles from './RecipeBox.module.scss';
 import { PiGreaterThanBold, PiShareFatLight } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ChefifyConText } from '../../ChefifyContext';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
 import { FaGreaterThan, FaLessThan } from 'react-icons/fa';
@@ -18,6 +18,10 @@ const RecipeBox = () => {
     const ulRef = useRef(null);
     const recipePerPage = 8;
     const recipePerRow = 4;
+
+    useEffect(() => {
+        setTabRecipes(savedRecipes);
+    }, [savedRecipes]);
 
     const currentRecipePerPage = tabRecipes.slice(
         currentPage * recipePerPage - recipePerPage,

@@ -1,20 +1,63 @@
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Image, Row, Toast } from 'react-bootstrap';
 import styles from './CookingGuide.module.scss';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ChefifyConText } from '../../ChefifyContext';
 import { FaPlus, FaRegBookmark, FaStar } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
+import recipes from '../../data/recipes.json';
+import { motion } from 'framer-motion';
 
 const CookingGuide = () => {
-    const { login } = useContext(ChefifyConText);
+    const { login, savedRecipes, setSavedRecipes } = useContext(ChefifyConText);
+    const { id } = useParams();
+    const [success, setSuccess] = useState(true);
+
+    const recipe = recipes.find((item) => item.id == id);
+
+    const handleSavedRecipe = (recipe) => {
+        if (!login) {
+            setSuccess(false);
+            setTimeout(() => setSuccess(true), 3000);
+        } else {
+            const newSavedRecipes = savedRecipes.some((item) => item.id == recipe.id)
+                ? savedRecipes.filter((item) => item.id != recipe.id)
+                : [...savedRecipes, recipe];
+            setSavedRecipes(newSavedRecipes);
+        }
+    };
 
     return (
         <Container
             className="d-flex flex-column justify-content-center align-items-center px-0"
             style={{ margin: '90px 105px 48px' }}
         >
-            <div className="d-flex gap-2 justify-content-center align-items-center w-100">
-                <div style={{ width: '40%' }}>
-                    <h2 className="fw-bold">How to make a Strawberry Shortcake</h2>
+            {!success && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: '0%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        zIndex: 10000,
+                    }}
+                >
+                    <Toast onClose={() => setSuccess(true)}>
+                        <Toast.Header>
+                            <strong className="me-auto text-danger">Notify</strong>
+                        </Toast.Header>
+                        <Toast.Body className="bg-danger text-white">You need to login</Toast.Body>
+                    </Toast>
+                </div>
+            )}
+            <div className="d-flex justify-content-between w-100">
+                <motion.div
+                    initial={{ opacity: 0, x: -100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    style={{ width: '40%', height: '145vh' }}
+                >
+                    <h2 className="fw-bold">How to make a {recipe.name}</h2>
                     <p>
                         It seems like there may be a misunderstanding. If you're asking how a user can make a Strawberry
                         Shortcake, the process would be identical to the recipe I shared earlier. It involves preparing
@@ -33,7 +76,14 @@ const CookingGuide = () => {
                                     <h5 className="mb-0 ms-3">Emma Gonzalez</h5>
                                 </Col>
                                 <Col xs={6} className="d-flex justify-content-end align-items-end px-0">
-                                    <Button className={`${styles.btn} ${true && login ? styles.active : ''}`}>
+                                    <Button
+                                        onClick={() => handleSavedRecipe(recipe)}
+                                        className={`${styles.btn} ${
+                                            savedRecipes.some((item) => item.id == recipe.id) && login
+                                                ? styles.active
+                                                : ''
+                                        }`}
+                                    >
                                         <div className="d-flex justify-content-center align-items-center">
                                             <FaRegBookmark className="fs-5" />
                                         </div>
@@ -97,9 +147,109 @@ const CookingGuide = () => {
                             </Row>
                         </Card>
                     </div>
-                </div>
-                <div style={{ width: '60%' }}>Hello</div>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, x: 100 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    style={{ width: '60%', height: '145vh', overflowY: 'auto' }}
+                    className="ms-4 d-flex flex-column gap-3 rounded-4"
+                >
+                    <div className="d-flex flex-column gap-2">
+                        <img src={`/src/assets/images/recipes/${recipe.image}.png`} className="rounded-4" />
+                    </div>
+                    <div className="d-flex flex-column gap-2">
+                        <span className="fw-bold fs-5" style={{ color: '#313943' }}>
+                            Step 1
+                        </span>
+                        <p className="my-0">
+                            Pick over and hull strawberries. Cut in half or slice, depending on size. Gently crush about
+                            a quarter of the berries with a fork to release their juices. Mix with remaining berries and
+                            the ½ cup of sugar, adding more sugar if necessary. Set aside, covered, for about half an
+                            hour to develop flavor.
+                        </p>
+                        <img src="/src/assets/images/Image 118.png" className="rounded-4" />
+                    </div>
+                    <div className="d-flex flex-column gap-2">
+                        <span className="fw-bold fs-5" style={{ color: '#313943' }}>
+                            Step 2
+                        </span>
+                        <p className="my-0">Preheat oven to 450 degrees.</p>
+                    </div>
+                    <div className="d-flex flex-column gap-2">
+                        <span className="fw-bold fs-5" style={{ color: '#313943' }}>
+                            Step 3
+                        </span>
+                        <p className="my-0">
+                            Into a large mixing bowl, sift together flour, 3 tablespoons sugar, salt and baking powder.
+                            Add ¾ cup of softened butter, and rub into dry ingredients as for pastry. Add 1¼ cups cream,
+                            and mix to a soft dough. Knead the dough for one minute on a lightly floured pastry board,
+                            then roll it out to about ½-inch thickness. Using a 3-inch biscuit cutter, cut an even
+                            number of rounds - 2 rounds per serving.
+                        </p>
+                        <img src="/src/assets/images/Image 110.png" className="rounded-4" />
+                    </div>
+                    <div className="d-flex flex-column gap-2">
+                        <span className="fw-bold fs-5" style={{ color: '#313943' }}>
+                            Step 4
+                        </span>
+                        <p className="my-0">
+                            Use a little of the butter to grease a baking sheet. Place half the rounds on it. Melt
+                            remaining butter and brush a little on the rounds; place remaining rounds on top. Bake for
+                            10 to 15 minutes, or until golden brown.
+                        </p>
+                    </div>
+                    <div className="d-flex flex-column gap-2">
+                        <span className="fw-bold fs-5" style={{ color: '#313943' }}>
+                            Step 5
+                        </span>
+                        <p className="my-0">
+                            Use a little of the butter to grease a baking sheet. Place half the rounds on it. Melt
+                            remaining butter and brush a little on the rounds; place remaining rounds on top. Bake for
+                            10 to 15 minutes, or until golden brown.
+                        </p>
+                    </div>
+                    <div className="d-flex flex-column gap-2">
+                        <span className="fw-bold fs-5" style={{ color: '#313943' }}>
+                            Step 6
+                        </span>
+                        <p className="my-0">
+                            Beat remaining cream until it thickens. Add vanilla. Beat again just until thick.
+                        </p>
+                        <img src="/src/assets/images/Image 111.png" className="rounded-4" />
+                    </div>
+                </motion.div>
             </div>
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="w-100"
+            >
+                <Form className="mt-5 w-100">
+                    <Form.Group>
+                        <Form.Label style={{ color: '#313943' }}>
+                            <h3 className="fw-bold">Cooking note</h3>
+                        </Form.Label>
+                        <div style={{ position: 'relative' }}>
+                            <Form.Control
+                                as="textarea"
+                                rows={6}
+                                placeholder="State your opinion about the article"
+                                className={`${styles.focus_border}`}
+                            />
+                            <Button
+                                type="submit"
+                                className={`${styles.btn} ${styles.btnAdd} ${styles.no_focus_border}`}
+                                style={{ width: '90px', position: 'absolute', right: '16px', top: '100px' }}
+                            >
+                                Send
+                            </Button>
+                        </div>
+                    </Form.Group>
+                </Form>
+            </motion.div>
         </Container>
     );
 };

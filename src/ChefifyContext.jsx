@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const ChefifyConText = createContext();
 
@@ -18,6 +19,7 @@ export const ChefifyProvider = ({ children }) => {
     const [savedRecipes, setSavedRecipes] = useState(savedRecipesData);
     const [folderRecipes, setFolderRecipes] = useState(folderRecipesData);
     const [genevieveRecipes, setGenevieveRecipes] = useState(genevieveRecipesData);
+    const navigate = useNavigate();
 
     useEffect(() => {
         localStorage.setItem('users', JSON.stringify(users));
@@ -48,6 +50,7 @@ export const ChefifyProvider = ({ children }) => {
         setFolderRecipes,
         genevieveRecipes,
         setGenevieveRecipes,
+        navigate,
     };
 
     return <ChefifyConText.Provider value={value}>{children}</ChefifyConText.Provider>;

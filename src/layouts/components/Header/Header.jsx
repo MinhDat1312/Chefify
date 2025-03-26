@@ -1,6 +1,6 @@
-import { Button, Container, Form, InputGroup, Nav, Navbar, NavLink } from 'react-bootstrap';
+import { Button, Container, Form, InputGroup, Nav, Navbar } from 'react-bootstrap';
 import styles from './Header.module.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { ChefifyConText } from '../../../ChefifyContext';
 
@@ -45,12 +45,18 @@ const Header = () => {
                     <Navbar.Collapse>
                         <Nav>
                             {['What to cook', 'Recipes', 'Ingredients', 'Occasinos', 'About us'].map((item, index) => {
-                                const isFocus = loc.pathname == `/${item}`;
+                                const path =
+                                    item === 'What to cook'
+                                        ? '/'
+                                        : item === 'About us'
+                                        ? '/about'
+                                        : `/${item.toLowerCase()}`;
+                                const isFocus = loc.pathname == path;
                                 return (
                                     <Nav.Link
                                         key={index}
                                         as={NavLink}
-                                        to={`/${item}`}
+                                        to={path}
                                         className={`${styles.nav_item} ${isFocus ? styles.focusPage : ''}`}
                                     >
                                         {item}
