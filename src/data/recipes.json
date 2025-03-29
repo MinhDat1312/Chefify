@@ -82,5 +82,45 @@
             "avatar": "Julia Lopez",
             "desc": "Butter fried noodles: Savory noodles cooked in butter for a delicious and satisfying meal"
         }
+    },
+    {
+        "id": 13,
+        "name": "Cucumber salad, cherry tomatoes",
+        "image": "Cucumber salad and cherry tomatoes"
+    },
+    {
+        "id": 14,
+        "name": "Italian-style tomato salad",
+        "image": "Italian-style tomato salad"
+    },
+    {
+        "id": 15,
+        "name": "Potato Salad",
+        "image": "Potato salad"
+    },
+    {
+        "id": 16,
+        "name": "Five-color salad",
+        "image": "Five-color salad"
+    },
+    {
+        "id": 17,
+        "name": "Corn Salad",
+        "image": "Corn salad"
+    },
+    {
+        "id": 18,
+        "name": "Salad with cabbage and shrimp",
+        "image": "Salad with cabbage and shrimp"
+    },
+    {
+        "id": 19,
+        "name": "Lotus delight salad",
+        "image": "Lotus delight salad (2)"
+    },
+    {
+        "id": 20,
+        "name": "Avocado Salad",
+        "image": "Avocado Salad"
     }
 ]
