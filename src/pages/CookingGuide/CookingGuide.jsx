@@ -55,7 +55,7 @@ const CookingGuide = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    style={{ width: '40%', height: '145vh' }}
+                    style={{ width: '40%', maxHeight: '1020px' }}
                 >
                     <h2 className="fw-bold">How to make a {recipe.name}</h2>
                     <p>
@@ -153,7 +153,7 @@ const CookingGuide = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    style={{ width: '60%', height: '145vh', overflowY: 'auto' }}
+                    style={{ width: '60%', maxHeight: '1020px', overflowY: 'auto' }}
                     className="ms-4 d-flex flex-column gap-3 rounded-4"
                 >
                     <div className="d-flex flex-column gap-2">

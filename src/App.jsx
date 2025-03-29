@@ -6,6 +6,7 @@ import Login from './pages/Login/Login';
 import RecipeBox from './pages/RecipeBox/RecipeBox';
 import CookingGuide from './pages/CookingGuide/CookingGuide';
 import { useEffect } from 'react';
+import Search from './pages/Search/Search';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -27,7 +28,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/recipe_box" element={<RecipeBox />} />
                 <Route path="/cooking_guide/:id" element={<CookingGuide />} />
-                <Route path="" />
+                <Route path="/search" element={<Search />} />
             </Routes>
             <Footer />
         </div>

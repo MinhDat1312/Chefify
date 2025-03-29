@@ -1,6 +1,6 @@
 import recipe from '../../data/recipes.json';
 import { useContext, useState } from 'react';
-import { Button, Card, Carousel, Modal } from 'react-bootstrap';
+import { Button, Card, Carousel, Container, Modal } from 'react-bootstrap';
 import styles from './Home.module.scss';
 import LoginModal from '../../layouts/LoginModal/LoginModal';
 import { ChefifyConText } from '../../ChefifyContext';
@@ -71,11 +71,14 @@ const Home = () => {
                     </Card>
                 </motion.div>
             </div>
-            <div className="d-flex flex-column">
+            <Container
+                className="d-flex flex-column justify-content-center align-items-center px-0"
+                style={{ margin: '0px 105px' }}
+            >
                 <RecipeLayout type={'Summer'} recipes={recipe.slice(0, 4)} />
                 <RecipeLayout type={'Videos'} recipes={recipe.slice(4, 8)} />
                 <RecipeLayout type={'Editors'} recipes={recipe.slice(8, 12)} />
-            </div>
+            </Container>
             {showModalPro && (
                 <Modal show={showModalPro} onHide={() => setShowModalPro(false)} size="lg">
                     <Modal.Header closeButton className="border-bottom-0"></Modal.Header>

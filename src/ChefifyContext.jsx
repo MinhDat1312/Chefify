@@ -20,6 +20,7 @@ export const ChefifyProvider = ({ children }) => {
     const [folderRecipes, setFolderRecipes] = useState(folderRecipesData);
     const [genevieveRecipes, setGenevieveRecipes] = useState(genevieveRecipesData);
     const navigate = useNavigate();
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         localStorage.setItem('users', JSON.stringify(users));
@@ -51,6 +52,8 @@ export const ChefifyProvider = ({ children }) => {
         genevieveRecipes,
         setGenevieveRecipes,
         navigate,
+        search,
+        setSearch,
     };
 
     return <ChefifyConText.Provider value={value}>{children}</ChefifyConText.Provider>;

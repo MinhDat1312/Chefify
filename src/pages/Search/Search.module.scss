@@ -1,0 +1,36 @@
+.textParagraph {
+    text-align: start;
+    max-width: 320px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.customSelect {
+    button {
+        width: 160px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #f24c86;
+        border-color: #f24c86;
+
+        :global(.btn):global(.show),
+        &:hover,
+        &:active {
+            color: white !important;
+            border-color: #f24c86 !important;
+            background-color: #f24c86 !important;
+        }
+    }
+
+    :global(.btn):global(.show) {
+        color: white !important;
+        border-color: #f24c86 !important;
+        background-color: #f24c86 !important;
+    }
+}

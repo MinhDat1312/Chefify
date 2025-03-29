@@ -22,7 +22,12 @@ const RecipeLayout = ({ type, recipes }) => {
     };
 
     return (
-        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            style={{ width: '100%' }}
+        >
             {!success && (
                 <div
                     style={{
@@ -63,9 +68,7 @@ const RecipeLayout = ({ type, recipes }) => {
                     )}
 
                     <Row
-                        className={`d-flex ${
-                            type == 'Saved' ? 'justify-content-start w-100' : 'justify-content-center'
-                        }`}
+                        className="d-flex justify-content-start w-100"
                         style={{ marginBottom: type == 'Saved' ? '28px' : '' }}
                     >
                         {recipes.map((recipe, index) => {
@@ -124,16 +127,17 @@ const RecipeLayout = ({ type, recipes }) => {
                             Curated Culinary Delights: Handpicked Favorites by Our Expert Editors!
                         </span>
                     </div>
-                    <Row className="d-flex justify-content-center" style={{ marginInline: '60px' }}>
+                    <Row className="d-flex justify-content-start w-100">
                         {recipes.map((recipe, index) => {
                             const activeSaved = savedRecipes.some((item) => item.id == recipe.id);
                             return (
                                 <Card
                                     key={recipe.id}
                                     as={Col}
-                                    xs={5}
+                                    xs={6}
                                     style={{
                                         marginRight: index % 2 != 0 ? '' : '28px',
+                                        maxWidth: '630px',
                                         position: 'relative',
                                     }}
                                     className={styles.cardEditor}

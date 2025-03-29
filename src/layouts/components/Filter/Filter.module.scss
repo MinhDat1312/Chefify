@@ -1,0 +1,116 @@
+.accordion {
+    .accordionItem {
+        border-top: none;
+        border-inline: none;
+        border-radius: 0;
+
+        .accordionHeader {
+            button {
+                padding-inline: 16px !important;
+                font-size: 18px;
+                font-weight: bold !important;
+                background-color: white !important;
+                color: black !important;
+                box-shadow: none;
+
+                &::after {
+                    background-image: url('/src/assets/images/Chevron\ up\ large\ 1.png') !important;
+                    background-size: 1.5rem;
+                }
+
+                &:focus {
+                    box-shadow: none;
+                }
+
+                &:not(:global(.collapsed)) {
+                    color: #f24c86 !important;
+                }
+            }
+        }
+
+        .accordionBody {
+            padding-inline: 16px;
+            padding-top: 0px;
+
+            .check {
+                width: 50%;
+
+                :global(.form-check-input) {
+                    cursor: pointer;
+
+                    &:checked {
+                        background-color: #f24c86;
+                        border-color: #f24c86;
+                    }
+
+                    &:focus {
+                        box-shadow: 0 0 0 0.25rem rgba(248, 201, 217, 0.5);
+                        border-color: #dee2e6;
+                    }
+                }
+
+                :global(.form-check-label) {
+                    cursor: pointer;
+                }
+            }
+
+            .customSlider {
+                width: 100%;
+
+                :global(.ant-slider-rail) {
+                    background-color: #f8c9d9;
+                    height: 8px;
+                }
+
+                :global(.ant-slider-track-draggable) {
+                    height: 8px;
+                }
+
+                :global(.ant-slider-track) {
+                    background-color: #f24c86;
+                }
+
+                :global(.ant-slider-step) {
+                    height: 8px;
+                }
+
+                :global(.ant-slider-handle) {
+                    inset-block-start: 0px;
+
+                    &::after,
+                    &::before {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    &::before {
+                        inset-inline-start: -1.5px;
+                        inset-block-start: -0.5px;
+                    }
+
+                    &::after {
+                        box-shadow: 0 0 0 2px #f24c86;
+                    }
+
+                    &:focus::after,
+                    &:hover::after {
+                        outline: 4px solid rgba(248, 201, 217, 0.5);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.btn {
+    background-color: #f24c86;
+    border: none;
+    width: 92%;
+    margin: 32px 16px;
+    font-weight: bold;
+
+    &:hover {
+        opacity: 0.5 !important;
+        background-color: #f24c86;
+    }
+}
