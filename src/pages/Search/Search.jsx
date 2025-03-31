@@ -5,9 +5,10 @@ import { useContext, useState } from 'react';
 import { ChefifyConText } from '../../ChefifyContext';
 import recipes from '../../data/recipes.json';
 import { Select } from 'antd';
+import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
 
 const Search = () => {
-    const { search } = useContext(ChefifyConText);
+    const { search, navigate } = useContext(ChefifyConText);
     const [selected, setSelected] = useState('Sort');
 
     const searchFilter = recipes.filter((recipe) => recipe.name.toLowerCase().includes(search.toLowerCase()));
@@ -17,11 +18,13 @@ const Search = () => {
     return (
         <Container
             className="d-flex justify-content-start align-items-start px-0 gap-4"
-            style={{ margin: '90px 105px 48px' }}
+            style={{ marginTop: '90px', marginBottom: '48px', maxWidth: '1366px' }}
         >
             <Filter />
-            <div style={{ width: '70%' }}>
-                {searchFilter.length > 0 ? (
+            <div style={{ width: '75%' }}>
+                {search == '' ? (
+                    navigate('/')
+                ) : searchFilter.length > 0 ? (
                     <>
                         <div className="d-flex justify-content-between align-items-center">
                             <h2 className="text-center fw-bold">
@@ -46,7 +49,7 @@ const Search = () => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <div></div>
+                        <RecipeLayout type={''} recipes={searchFilter} />
                     </>
                 ) : (
                     <div className="d-flex flex-column justify-content-center align-items-center gap-4">

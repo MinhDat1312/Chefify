@@ -72,8 +72,9 @@ const Home = () => {
                 </motion.div>
             </div>
             <Container
-                className="d-flex flex-column justify-content-center align-items-center px-0"
-                style={{ margin: '0px 105px' }}
+                fluid
+                className="d-flex flex-column justify-content-center align-items-center px-0 w-100"
+                style={{ margin: '0px' }}
             >
                 <RecipeLayout type={'Summer'} recipes={recipe.slice(0, 4)} />
                 <RecipeLayout type={'Videos'} recipes={recipe.slice(4, 8)} />

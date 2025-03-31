@@ -29,7 +29,9 @@ const Login = () => {
         checkSubmit = 2;
         e.preventDefault();
         const checkUserName = users.some(
-            (users) => formLogin.firstName == users.firstName && formLogin.lastName == users.lastName,
+            (users) =>
+                formLogin.username.firstName == users.username.firstName &&
+                formLogin.username.lastName == users.username.lastName,
         );
         const checkEmail = users.some((users) => formLogin.email == users.email);
         const checkPassword = users.some((users) => formLogin.password == users.password);

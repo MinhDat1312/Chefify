@@ -9,9 +9,15 @@ import { FaGreaterThan, FaLessThan } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const RecipeBox = () => {
-    const { savedRecipes, setSavedRecipes, folderRecipes, setFolderRecipes, genevieveRecipes, setGenevieveRecipes } =
-        useContext(ChefifyConText);
-    const navigate = useNavigate();
+    const {
+        savedRecipes,
+        setSavedRecipes,
+        folderRecipes,
+        setFolderRecipes,
+        genevieveRecipes,
+        setGenevieveRecipes,
+        navigate,
+    } = useContext(ChefifyConText);
     const [type, setType] = useState('Saved Recipes');
     const [tabRecipes, setTabRecipes] = useState(savedRecipes);
     const [currentPage, setCurrentPage] = useState(1);
@@ -68,7 +74,7 @@ const RecipeBox = () => {
     return (
         <Container
             className="d-flex flex-column justify-content-start align-items-start px-0"
-            style={{ margin: '90px 105px 48px' }}
+            style={{ marginTop: '90px', marginBottom: '48px', maxWidth: '1366px' }}
         >
             <div>
                 <motion.div

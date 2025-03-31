@@ -47,14 +47,15 @@ const RecipeLayout = ({ type, recipes }) => {
                 </div>
             )}
 
-            {type == 'Summer' || type == 'Videos' || type == 'Saved' ? (
+            {type == 'Summer' || type == 'Videos' || type == 'Saved' || type == '' ? (
                 <Container
                     fluid
-                    className={`d-flex flex-column justify-content-center align-items-center mx-0 w-100 ${
+                    className={`d-flex flex-column justify-content-center align-items-center w-100 px-0 ${
                         type == 'Saved' ? 'px-0' : 'my-5'
                     }`}
+                    style={{ maxWidth: '1366px' }}
                 >
-                    {type != 'Saved' && (
+                    {type != 'Saved' && type != '' ? (
                         <div className="mb-4">
                             <h2 className="fw-bold text-center" style={{ color: '#f24c86' }}>
                                 {type == 'Summer' ? 'This Summer Recipes' : 'Recipes With Videos'}
@@ -65,10 +66,12 @@ const RecipeLayout = ({ type, recipes }) => {
                                     : 'Cooking Up Culinary Creations with Step-by-Step Videos'}
                             </span>
                         </div>
+                    ) : (
+                        ''
                     )}
 
                     <Row
-                        className="d-flex justify-content-start w-100"
+                        className="d-flex justify-content-start w-100 flex-wrap"
                         style={{ marginBottom: type == 'Saved' ? '28px' : '' }}
                     >
                         {recipes.map((recipe, index) => {
@@ -78,10 +81,17 @@ const RecipeLayout = ({ type, recipes }) => {
                                 <Card
                                     key={recipe.id}
                                     as={Col}
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
+                                    lg={3}
                                     style={{
-                                        marginRight: index == 3 ? '' : '28px',
-                                        maxWidth: '320px',
-                                        maxHeight: '324px',
+                                        marginRight:
+                                            type == '' ? (index % 3 == 1 ? '23px' : '') : index == 3 ? '' : '28px',
+                                        marginLeft: type == '' ? (index % 3 == 1 ? '23px' : '') : '',
+                                        marginBottom: type == '' ? '23px' : '',
+                                        width: '320px',
+                                        height: '324px',
                                     }}
                                     className={styles.card}
                                 >
@@ -116,8 +126,8 @@ const RecipeLayout = ({ type, recipes }) => {
             ) : (
                 <Container
                     fluid
-                    className="d-flex flex-column justify-content-center align-items-center mt-5 mx-0 w-100"
-                    style={{ marginBottom: '20px' }}
+                    className="d-flex flex-column justify-content-center align-items-center mt-5 px-0 w-100"
+                    style={{ marginBottom: '20px', maxWidth: '1366px' }}
                 >
                     <div className="mb-4">
                         <h2 className="fw-bold text-center" style={{ color: '#f24c86' }}>
@@ -137,7 +147,7 @@ const RecipeLayout = ({ type, recipes }) => {
                                     xs={6}
                                     style={{
                                         marginRight: index % 2 != 0 ? '' : '28px',
-                                        maxWidth: '630px',
+                                        maxWidth: '667px',
                                         position: 'relative',
                                     }}
                                     className={styles.cardEditor}

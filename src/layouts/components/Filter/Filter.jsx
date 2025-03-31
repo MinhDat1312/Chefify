@@ -18,7 +18,7 @@ const Filter = () => {
     };
 
     return (
-        <Container className="mx-0 px-0" style={{ width: '30%'}}>
+        <Container className="mx-0 px-0" style={{ width: '25%'}}>
             <Card className="shadow-sm">
                 <Card.Title className="fw-bold mb-3 px-3 pt-3">☰ FILTERS</Card.Title>
                 <Accordion className={styles.accordion} alwaysOpen>
