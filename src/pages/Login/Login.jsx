@@ -28,14 +28,10 @@ const Login = () => {
     const handleLogin = (e) => {
         checkSubmit = 2;
         e.preventDefault();
-        const checkUserName = users.some(
-            (users) =>
-                formLogin.username.firstName == users.username.firstName &&
-                formLogin.username.lastName == users.username.lastName,
-        );
+
         const checkEmail = users.some((users) => formLogin.email == users.email);
         const checkPassword = users.some((users) => formLogin.password == users.password);
-        if (checkUserName && checkEmail && checkPassword) {
+        if (checkEmail && checkPassword) {
             navigate('/');
             setLogin(true);
         } else {
@@ -79,18 +75,7 @@ const Login = () => {
         setFormLogin((prev) => {
             const keys = name.split('.');
             if (keys.length == 1) {
-                if (name === 'username') {
-                    const names = value.split(' ');
-                    const firstName = names[0];
-                    const lastName = names.slice(1).join(' ');
-                    return {
-                        ...prev,
-                        username: {
-                            firstName: firstName,
-                            lastName: lastName,
-                        },
-                    };
-                } else return { ...prev, [name]: value };
+                return { ...prev, [name]: value };
             } else if (keys.length == 2) {
                 return {
                     ...prev,
@@ -159,20 +144,14 @@ const Login = () => {
             <Container ref={containerRef} className={styles.loginContainer}>
                 <Card className={styles.loginCard}>
                     <Card.Body>
-                        <h2 className="text-center mb-4 fw-bold">Create an account</h2>
+                        <h2 className="text-center mb-4 fw-bold">Sign in</h2>
                         <Form onSubmit={handleLogin} className="d-flex flex-column gap-3">
-                            <InputFloating
-                                type="text"
-                                id="username"
-                                placeholder="nguyen thang minh dat"
-                                labelName="Full name"
-                                change={handleChangeLogin}
-                            />
                             <InputFloating
                                 type="email"
                                 id="email"
                                 placeholder="example.email@gmail.com"
                                 labelName="Email"
+                                value={formLogin.email}
                                 change={handleChangeLogin}
                             />
                             <InputFloating
@@ -180,6 +159,7 @@ const Login = () => {
                                 id="password"
                                 placeholder="Enter at least 8+ characters"
                                 labelName="Password"
+                                value={formLogin.password}
                                 change={handleChangeLogin}
                             />
                             <Button

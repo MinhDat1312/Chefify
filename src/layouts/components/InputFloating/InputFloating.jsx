@@ -7,17 +7,17 @@ const InputFloating = ({ type, id, placeholder, labelName, value, change }) => {
     return (
         <div className={styles.input_container}>
             <input
-                type={`${type}`}
-                id={`${id}`}
+                type={type}
+                id={id}
                 autoComplete="off"
-                placeholder={`${placeholder}`}
+                placeholder={placeholder}
                 required
                 className={styles.text_input}
-                name={`${id}`}
+                name={id}
                 value={value}
                 onChange={change}
             />
-            <label htmlFor={`${id}`} className={styles.label}>
+            <label htmlFor={id} className={styles.label}>
                 {labelName}
             </label>
         </div>

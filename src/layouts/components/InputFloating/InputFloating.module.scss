@@ -50,19 +50,11 @@
 
         &:focus::placeholder {
             opacity: 1;
-            // animation-delay: 0.2s;
         }
     }
 
     .text_input:focus + .label,
-    .text_input.filled + .label {
-        top: 0;
-        font-size: 14px;
-        font-weight: bolder;
-        color: #424852;
-    }
-
-    .text_input:focus + .label,
+    .text_input.filled + .label,
     .text_input:not(:placeholder-shown) + .label {
         top: 0;
         font-size: 14px;
