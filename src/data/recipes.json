@@ -2,125 +2,185 @@
     {
         "id": 1,
         "name": "Italian-style tomato salad",
-        "image": "Italian-style tomato"
+        "image": "Italian-style tomato",
+        "time": 45,
+        "star": 2,
+        "type": "Pan-fried"
     },
     {
         "id": 2,
         "name": "Spaghetti with vegetables and shrimp",
-        "image": "Vegetable and shrimp spaghetti"
+        "image": "Vegetable and shrimp spaghetti",
+        "time": 30,
+        "star": 1,
+        "type": "Stir-fried"
     },
     {
         "id": 3,
         "name": "Lotus delight salad",
-        "image": "Lotus delight salad"
+        "image": "Lotus delight salad",
+        "time": 12,
+        "star": 3,
+        "type": "Grilled"
     },
     {
         "id": 4,
         "name": "Snack cakes",
-        "image": "Snack cakes"
+        "image": "Snack cakes",
+        "time": 45,
+        "star": 4,
+        "type": "Roasted"
     },
     {
         "id": 5,
         "name": "Salad with cabbage and shrimp",
-        "image": "Salad with cabbage"
+        "image": "Salad with cabbage",
+        "time": 20,
+        "star": 2,
+        "type": "Sauteed"
     },
     {
         "id": 6,
         "name": "Salad of cove beans, shrimp and potatoes",
-        "image": "Bean, shrimp, and potato salad"
+        "image": "Bean, shrimp, and potato salad",
+        "time": 15,
+        "star": 4,
+        "type": "Baked"
     },
     {
         "id": 7,
         "name": "Sunny-side up fried eggs",
-        "image": "Sunny-side up fried eggs"
+        "image": "Sunny-side up fried eggs",
+        "time": 45,
+        "star": 3,
+        "type": "Streamed"
     },
     {
         "id": 8,
         "name": "Lotus delight salad",
-        "image": "Lotus delight salad_01"
+        "image": "Lotus delight salad_01",
+        "time": 30,
+        "star": 2,
+        "type": "Stewed"
     },
     {
         "id": 9,
         "name": "Stuffed sticky rice ball",
         "image": "Stuffed sticky rice ball",
+        "time": 50,
         "editor": {
             "id": 9,
             "name": "Jennifer King",
             "avatar": "Jennifer King",
             "desc": "Stuffed sticky rice balls: A delightful Asian treat with chewy, glutinous rice and a flavorful surprise filling"
-        }
+        },
+        "star": 3,
+        "type": "Pan-fried"
     },
     {
         "id": 10,
         "name": "Strawberry smoothie",
         "image": "Strawberry smoothie",
+        "time": 45,
         "editor": {
             "id": 10,
             "name": "Matthew Martinez",
             "avatar": "Matthew Martinez",
             "desc": "Savor the refreshing delight of a strawberry smoothie. Made with ripe strawberries, this creamy blend offers"
-        }
+        },
+        "star": 3,
+        "type": "Stir-fried"
     },
     {
         "id": 11,
         "name": "Latte Art",
         "image": "Latte Art",
+        "time": 15,
         "editor": {
             "id": 11,
             "name": "Sarah Hill",
             "avatar": "Sarah Hill",
             "desc": "Latte art is the skillful craft of creating captivating designs on the surface of a latte"
-        }
+        },
+        "star": 1,
+        "type": "Grilled"
     },
     {
         "id": 12,
         "name": "Butter fried noodles",
         "image": "Butter fried noodles",
+        "time": 40,
         "editor": {
             "id": 12,
             "name": "Julia Lopez",
             "avatar": "Julia Lopez",
             "desc": "Butter fried noodles: Savory noodles cooked in butter for a delicious and satisfying meal"
-        }
+        },
+        "star": 4,
+        "type": "Roasted"
     },
     {
         "id": 13,
         "name": "Cucumber salad, cherry tomatoes",
-        "image": "Cucumber salad and cherry tomatoes"
+        "image": "Cucumber salad and cherry tomatoes",
+        "time": 25,
+        "star": 4,
+        "type": "Baked"
     },
     {
         "id": 14,
         "name": "Italian-style tomato salad",
-        "image": "Italian-style tomato salad"
+        "image": "Italian-style tomato salad",
+        "time": 15,
+        "star": 2,
+        "type": "Sauteed"
     },
     {
         "id": 15,
         "name": "Potato Salad",
-        "image": "Potato salad"
+        "image": "Potato salad",
+        "time": 20,
+        "star": 1,
+        "type": "Streamed"
     },
     {
         "id": 16,
         "name": "Five-color salad",
-        "image": "Five-color salad"
+        "image": "Five-color salad",
+        "time": 20,
+        "star": 1,
+        "type": "Stewed"
     },
     {
         "id": 17,
         "name": "Corn Salad",
-        "image": "Corn salad"
+        "image": "Corn salad",
+        "time": 25,
+        "star": 1,
+        "type": "Pan-fried"
     },
     {
         "id": 18,
         "name": "Salad with cabbage and shrimp",
-        "image": "Salad with cabbage and shrimp"
+        "image": "Salad with cabbage and shrimp",
+        "time": 55,
+        "star": 2,
+        "type": "Stir-fried"
     },
     {
         "id": 19,
         "name": "Lotus delight salad",
-        "image": "Lotus delight salad (2)"
+        "image": "Lotus delight salad (2)",
+        "time": 20,
+        "star": 5,
+        "type": "Baked"
     },
     {
         "id": 20,
         "name": "Avocado Salad",
-        "image": "Avocado Salad"
+        "image": "Avocado Salad",
+        "time": 20,
+        "star": 5,
+        "type": "Sauteed"
     }
 ]

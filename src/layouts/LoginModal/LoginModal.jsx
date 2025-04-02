@@ -4,7 +4,7 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import { useContext, useState } from 'react';
-import { ChefifyConText } from '../../ChefifyContext';
+import { ChefifyConText } from '../../context/ChefifyContext';
 
 const LoginModal = () => {
     const { loginModal, setLoginModal, setLogin, users } = useContext(ChefifyConText);

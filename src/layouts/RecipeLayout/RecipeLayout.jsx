@@ -1,9 +1,9 @@
 import { Button, Card, Col, Container, Row, Toast } from 'react-bootstrap';
 import styles from './RecipeLayout.module.scss';
-import { FaRegBookmark } from 'react-icons/fa';
+import { FaRegBookmark, FaStar } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useContext, useState } from 'react';
-import { ChefifyConText } from '../../ChefifyContext';
+import { ChefifyConText } from '../../context/ChefifyContext';
 
 const RecipeLayout = ({ type, recipes }) => {
     const [success, setSuccess] = useState(true);
@@ -91,7 +91,7 @@ const RecipeLayout = ({ type, recipes }) => {
                                         marginLeft: type == '' ? (index % 3 == 1 ? '23px' : '') : '',
                                         marginBottom: type == '' ? '23px' : '',
                                         width: '320px',
-                                        height: '324px',
+                                        height: '346px',
                                     }}
                                     className={styles.card}
                                 >
@@ -102,20 +102,39 @@ const RecipeLayout = ({ type, recipes }) => {
                                         style={{ maxHeight: '200px' }}
                                     />
                                     <Card.Body className={styles.cardBody}>
-                                        <Card.Title className="fw-bold w-75">
-                                            <div style={{ width: '190px', height: '80px' }}>{recipe.name}</div>
-                                        </Card.Title>
-                                        <Button
-                                            active={activeSaved}
-                                            onClick={() => handleSaveRecipe(recipe)}
-                                            className={`${styles.btn} ${activeSaved && login ? styles.active : ''}`}
-                                        >
-                                            <div className="d-flex justify-content-center align-items-center">
-                                                <FaRegBookmark className="fs-5" />
+                                        <div className="d-flex justify-content-between">
+                                            <Card.Title className="fw-bold w-75">
+                                                <div style={{ width: '190px', height: '80px' }}>{recipe.name}</div>
+                                            </Card.Title>
+                                            <Button
+                                                active={activeSaved}
+                                                onClick={() => handleSaveRecipe(recipe)}
+                                                className={`${styles.btn} ${activeSaved && login ? styles.active : ''}`}
+                                            >
+                                                <div className="d-flex justify-content-center align-items-center">
+                                                    <FaRegBookmark className="fs-5" />
+                                                </div>
+                                            </Button>
+                                        </div>
+                                        <div className="d-flex justify-content-between">
+                                            <div className={styles.cardMinute}>
+                                                <span>{recipe.time} minutes</span>
                                             </div>
-                                        </Button>
-                                        <div className={styles.cardMinute}>
-                                            <span>{Math.floor(Math.random() * 60) + 1} minutes</span>
+                                            <div className={styles.cardType}>
+                                                <span>{recipe.type}</span>
+                                            </div>
+                                            <div className={styles.cardStar}>
+                                                <div className="d-flex gap-2">
+                                                    {[...Array(recipe.star)].map((_, index) => (
+                                                        <FaStar
+                                                            key={index}
+                                                            style={{
+                                                                fontSize: '20px',
+                                                            }}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     </Card.Body>
                                 </Card>
@@ -157,15 +176,16 @@ const RecipeLayout = ({ type, recipes }) => {
                                         src={`/src/assets/images/recipes/${recipe.image}.png`}
                                         style={{ maxWidth: '40%', height: 'auto' }}
                                     />
-                                    <Card.Body className="p-0" style={{ marginLeft: '16px' }}>
-                                        <div className="d-flex justify-content-between">
-                                            <div>
+                                    <Card.Body
+                                        className="p-0 d-flex flex-column justify-content-between align-items-start"
+                                        style={{ marginLeft: '16px' }}
+                                    >
+                                        <div className="d-flex justify-content-between w-100">
+                                            <div className="w-100">
                                                 <Card.Title className="fw-bold" style={{ fontSize: '24px' }}>
                                                     {recipe.name}
                                                 </Card.Title>
-                                                <span style={{ color: '#444957' }}>
-                                                    {Math.floor(Math.random() * 60) + 1} minutes
-                                                </span>
+                                                <span style={{ color: '#444957' }}>{recipe.time} minutes</span>
                                             </div>
                                             <Button
                                                 onClick={() => handleSaveRecipe(recipe)}
@@ -188,6 +208,36 @@ const RecipeLayout = ({ type, recipes }) => {
                                             </span>
                                         </div>
                                         <p className={styles.paragraphEditor}>{recipe.editor.desc}</p>
+                                        <div className="d-flex justify-content-between w-100">
+                                            <div
+                                                style={{
+                                                    padding: '2px 4px',
+                                                    borderRadius: '20px',
+                                                    textAlign: 'center',
+                                                    backgroundColor: '#fff0f5',
+                                                    fontSize: '20px',
+                                                    color: '#f24c86',
+                                                }}
+                                            >
+                                                <div className="d-flex gap-2">
+                                                    {[...Array(recipe.star)].map((_, index) => (
+                                                        <FaStar key={index} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    padding: '2px 4px',
+                                                    borderRadius: '20px',
+                                                    textAlign: 'center',
+                                                    backgroundColor: '#fff0f5',
+                                                    fontSize: '16px',
+                                                    color: '#f24c86',
+                                                }}
+                                            >
+                                                <span>{recipe.type}</span>
+                                            </div>
+                                        </div>
                                     </Card.Body>
                                 </Card>
                             );

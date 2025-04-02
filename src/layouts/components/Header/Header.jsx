@@ -1,19 +1,20 @@
 import { Button, Container, Form, InputGroup, Nav, Navbar } from 'react-bootstrap';
 import styles from './Header.module.scss';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
-import { ChefifyConText } from '../../../ChefifyContext';
+import { useContext, useRef, useState } from 'react';
+import { ChefifyConText } from '../../../context/ChefifyContext';
 
 const Header = () => {
     const loc = useLocation();
+    const ref = useRef();
     const { login, navigate, search, setSearch } = useContext(ChefifyConText);
 
     const handleLogin = () => {
         navigate('/login');
     };
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
+    const handleSearch = () => {
+        setSearch(ref.current.value);
         navigate('/search');
     };
 
@@ -36,15 +37,16 @@ const Header = () => {
                         />
                     </Navbar.Brand>
                     <InputGroup style={{ width: '350px' }}>
-                        <InputGroup.Text>
+                        <InputGroup.Text style={{ cursor: 'pointer' }} onClick={handleSearch}>
                             <img src="/src/assets/images/search.png" />
                         </InputGroup.Text>
                         <Form.Control
+                            ref={ref}
                             style={{ backgroundColor: '#e9ecef' }}
                             className={styles.no_focus_border}
                             placeholder="What would you like to cook?"
                             value={search}
-                            onChange={(e) => handleSearch(e)}
+                            onChange={handleSearch}
                         />
                     </InputGroup>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />

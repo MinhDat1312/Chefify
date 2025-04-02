@@ -3,10 +3,11 @@ import styles from './RecipeBox.module.scss';
 import { PiGreaterThanBold, PiShareFatLight } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { ChefifyConText } from '../../ChefifyContext';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
 import { FaGreaterThan, FaLessThan } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import Pagination from '../../layouts/components/Pagination/Pagination';
+import { ChefifyConText } from '../../context/ChefifyContext';
 
 const RecipeBox = () => {
     const {
@@ -46,29 +47,6 @@ const RecipeBox = () => {
             : tab == 'Folder'
             ? setTabRecipes(folderRecipes)
             : setTabRecipes(genevieveRecipes);
-    };
-
-    const handleChangePage = (page) => {
-        setCurrentPage(page);
-        ulRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    const handleNextPage = () => {
-        if (currentPage + 1 > Math.ceil(savedRecipes.length / recipePerPage)) {
-            setCurrentPage(1);
-        } else {
-            setCurrentPage((prev) => prev + 1);
-        }
-        ulRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    const handlePrevPage = () => {
-        if (currentPage - 1 <= 0) {
-            setCurrentPage(Math.ceil(savedRecipes.length / recipePerPage));
-        } else {
-            setCurrentPage((prev) => prev - 1);
-        }
-        ulRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
     return (
@@ -144,37 +122,13 @@ const RecipeBox = () => {
                                 <RecipeLayout key={index} type={'Saved'} recipes={row} />
                             ))}
                         </div>
-                        <div className="d-flex gap-3 justify-content-end mt-3">
-                            <div onClick={handlePrevPage} className="d-flex justify-content-center align-items-center">
-                                <FaLessThan style={{ color: '#62676d', cursor: 'pointer' }} />
-                            </div>
-                            {[...Array(Math.ceil(tabRecipes.length / recipePerPage))].map((_, index) => (
-                                <Button
-                                    key={index}
-                                    variant="outline-none"
-                                    className="fw-medium"
-                                    style={
-                                        currentPage === index + 1
-                                            ? {
-                                                  backgroundColor: '#f24c86',
-                                                  color: '#ffffff',
-                                                  border: '2px solid #f24c86',
-                                              }
-                                            : {
-                                                  backgroundColor: 'transparent',
-                                                  color: '#e0e1e6',
-                                                  border: '2px solid #e0e1e6',
-                                              }
-                                    }
-                                    onClick={() => handleChangePage(index + 1)}
-                                >
-                                    {index + 1}
-                                </Button>
-                            ))}
-                            <div onClick={handleNextPage} className="d-flex justify-content-center align-items-center">
-                                <FaGreaterThan style={{ color: '#62676d', cursor: 'pointer' }} />
-                            </div>
-                        </div>
+                        <Pagination
+                            list={tabRecipes}
+                            perPage={recipePerPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            scrollRef={ulRef}
+                        />
                     </>
                 ) : (
                     <div className="d-flex flex-column justify-content-center align-items-center fw-medium">

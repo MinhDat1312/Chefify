@@ -1,30 +1,64 @@
 import { Button, Container, Dropdown, Form } from 'react-bootstrap';
 import styles from './Search.module.scss';
 import Filter from '../../layouts/components/Filter/Filter';
-import { useContext, useState } from 'react';
-import { ChefifyConText } from '../../ChefifyContext';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { ChefifyConText } from '../../context/ChefifyContext';
 import recipes from '../../data/recipes.json';
-import { Select } from 'antd';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
+import Pagination from '../../layouts/components/Pagination/Pagination';
+import { FilterContext } from '../../context/FilterContext';
 
 const Search = () => {
     const { search, navigate } = useContext(ChefifyConText);
+    const { searchFilter, setSearchFilter, searchRecipe, setSearchRecipe } = useContext(FilterContext);
     const [selected, setSelected] = useState('Sort');
+    const [currentPage, setCurrentPage] = useState(1);
+    const scrollRef = useRef(null);
+    const recipePerPage = 9;
 
-    const searchFilter = recipes.filter((recipe) => recipe.name.toLowerCase().includes(search.toLowerCase()));
+    useEffect(() => {
+        const result = recipes.filter((recipe) => recipe.name.toLowerCase().includes(search.toLowerCase()));
+        setSearchFilter(result);
+        setSearchRecipe(result);
+    }, [search]);
 
-    const handleChangeSelect = () => {};
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchFilter]);
+
+    const currentRecipePage = searchFilter.slice(
+        currentPage * recipePerPage - recipePerPage,
+        currentPage * recipePerPage,
+    );
+
+    const handleChangeSelect = (option) => {
+        setSelected(option);
+
+        const filterRecipe = [...searchFilter];
+
+        switch (option) {
+            case 'A-Z': {
+                filterRecipe.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+                break;
+            }
+            case 'Z-A': {
+                filterRecipe.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()));
+                break;
+            }
+        }
+
+        setSearchFilter(filterRecipe);
+    };
 
     return (
         <Container
+            ref={scrollRef}
             className="d-flex justify-content-start align-items-start px-0 gap-4"
             style={{ marginTop: '90px', marginBottom: '48px', maxWidth: '1366px' }}
         >
             <Filter />
             <div style={{ width: '75%' }}>
-                {search == '' ? (
-                    navigate('/')
-                ) : searchFilter.length > 0 ? (
+                {currentRecipePage.length > 0 ? (
                     <>
                         <div className="d-flex justify-content-between align-items-center">
                             <h2 className="text-center fw-bold">
@@ -36,7 +70,7 @@ const Search = () => {
                                     {['A-Z', 'Z-A'].map((option, index) => (
                                         <Dropdown.Item
                                             key={index}
-                                            onClick={() => setSelected(option)}
+                                            onClick={() => handleChangeSelect(option)}
                                             onMouseEnter={() => setSelected(option)}
                                             style={{
                                                 backgroundColor: selected === option ? '#f24c86' : 'white',
@@ -49,7 +83,16 @@ const Search = () => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </div>
-                        <RecipeLayout type={''} recipes={searchFilter} />
+                        <div style={{ marginTop: '-32px', marginBottom: '-56px' }}>
+                            <RecipeLayout type={''} recipes={currentRecipePage} />
+                        </div>
+                        <Pagination
+                            list={searchFilter}
+                            perPage={recipePerPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            scrollRef={scrollRef}
+                        />
                     </>
                 ) : (
                     <div className="d-flex flex-column justify-content-center align-items-center gap-4">

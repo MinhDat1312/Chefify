@@ -1,11 +1,11 @@
 import { Button, Card, Col, Container, Form, Image, Row, Toast } from 'react-bootstrap';
 import styles from './CookingGuide.module.scss';
 import { useContext, useState } from 'react';
-import { ChefifyConText } from '../../ChefifyContext';
 import { FaPlus, FaRegBookmark, FaStar } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import recipes from '../../data/recipes.json';
 import { motion } from 'framer-motion';
+import { ChefifyConText } from '../../context/ChefifyContext';
 
 const CookingGuide = () => {
     const { login, savedRecipes, setSavedRecipes } = useContext(ChefifyConText);
@@ -114,7 +114,7 @@ const CookingGuide = () => {
                                                     <FaStar
                                                         key={index}
                                                         style={{
-                                                            color: index < 4 ? '#ffd700' : '#d3d3d3',
+                                                            color: recipe.star > index ? '#f24c86' : '#d3d3d3',
                                                             fontSize: '20px',
                                                         }}
                                                     />

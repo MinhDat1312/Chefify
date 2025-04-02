@@ -3,10 +3,10 @@ import { useContext, useState } from 'react';
 import { Button, Card, Carousel, Container, Modal } from 'react-bootstrap';
 import styles from './Home.module.scss';
 import LoginModal from '../../layouts/LoginModal/LoginModal';
-import { ChefifyConText } from '../../ChefifyContext';
 import { FaArrowRight } from 'react-icons/fa';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
 import { motion } from 'framer-motion';
+import { ChefifyConText } from '../../context/ChefifyContext';
 
 const Home = () => {
     const [showModalPro, setShowModalPro] = useState(true);

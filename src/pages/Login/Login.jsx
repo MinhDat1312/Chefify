@@ -2,11 +2,11 @@ import React, { useContext, useRef, useState } from 'react';
 import { Form, Button, Container, Card, Alert, Toast, FloatingLabel } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.scss';
-import { ChefifyConText } from '../../ChefifyContext';
 import InputFloating from '../../layouts/components/InputFloating/InputFloating';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import CheckBox from '../../layouts/components/CheckBox/CheckBox';
+import { ChefifyConText } from '../../context/ChefifyContext';
 
 let checkSubmit = 0;
 

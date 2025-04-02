@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Accordion, Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import styles from './Filter.module.scss';
 import { Slider } from 'antd';
 import { FaStar } from 'react-icons/fa';
+import { FilterContext } from '../../../context/FilterContext';
 
 const Filter = () => {
-    const [selectedTypes, setSelectedTypes] = useState(['Grilled', 'Roasted']);
-    const [timeRange, setTimeRange] = useState([30, 50]);
-    const [selectedRatings, setSelectedRatings] = useState([3, 4, 5]);
+    const {
+        selectedTypes,
+        setSelectedTypes,
+        timeRange,
+        setTimeRange,
+        selectedRatings,
+        setSelectedRatings,
+        searchFilter,
+        setSearchFilter,
+        searchRecipe,
+    } = useContext(FilterContext);
 
     const handleTypeChange = (type) => {
         setSelectedTypes((prev) => (prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]));
@@ -17,8 +26,59 @@ const Filter = () => {
         setSelectedRatings((prev) => (prev.includes(rating) ? prev.filter((r) => r !== rating) : [...prev, rating]));
     };
 
+    const handleApply = () => {
+        if (selectedTypes.length > 0 || selectedRatings.length > 0 || timeRange[0] != 0 || timeRange[1] != 0) {
+            let filterRecipe = [...searchRecipe];
+
+            if (selectedTypes.length > 0 && selectedRatings.length > 0 && (timeRange[0] != 0 || timeRange[1] != 0)) {
+                filterRecipe = filterRecipe.filter(
+                    (recipe) =>
+                        selectedTypes.includes(recipe.type) &&
+                        selectedRatings.includes(recipe.star) &&
+                        recipe.time >= timeRange[0] &&
+                        recipe.time <= timeRange[1],
+                );
+                setSearchFilter(filterRecipe);
+            } else if (selectedTypes.length > 0 && (timeRange[0] != 0 || timeRange[1] != 0)) {
+                filterRecipe = filterRecipe.filter(
+                    (recipe) =>
+                        selectedTypes.includes(recipe.type) &&
+                        recipe.time >= timeRange[0] &&
+                        recipe.time <= timeRange[1],
+                );
+                setSearchFilter(filterRecipe);
+            } else if (selectedRatings.length > 0 && (timeRange[0] != 0 || timeRange[1] != 0)) {
+                filterRecipe = filterRecipe.filter(
+                    (recipe) =>
+                        selectedRatings.includes(recipe.star) &&
+                        recipe.time >= timeRange[0] &&
+                        recipe.time <= timeRange[1],
+                );
+                setSearchFilter(filterRecipe);
+            } else if (selectedRatings.length > 0 && selectedTypes.length > 0) {
+                filterRecipe = filterRecipe.filter(
+                    (recipe) => selectedRatings.includes(recipe.star) && selectedTypes.includes(recipe.type),
+                );
+                setSearchFilter(filterRecipe);
+            } else if (selectedRatings.length > 0) {
+                filterRecipe = filterRecipe.filter((recipe) => selectedRatings.includes(recipe.star));
+                setSearchFilter(filterRecipe);
+            } else if (timeRange[0] != 0 || timeRange[1] != 0) {
+                filterRecipe = filterRecipe.filter(
+                    (recipe) => recipe.time >= timeRange[0] && recipe.time <= timeRange[1],
+                );
+                setSearchFilter(filterRecipe);
+            } else if (selectedTypes.length > 0) {
+                filterRecipe = filterRecipe.filter((recipe) => selectedTypes.includes(recipe.type));
+                setSearchFilter(filterRecipe);
+            }
+        } else if (selectedTypes.length == 0 && selectedRatings.length == 0 && timeRange[0] == 0 && timeRange[1] == 0) {
+            setSearchFilter(searchRecipe);
+        }
+    };
+
     return (
-        <Container className="mx-0 px-0" style={{ width: '25%'}}>
+        <Container className="mx-0 px-0" style={{ width: '25%' }}>
             <Card className="shadow-sm">
                 <Card.Title className="fw-bold mb-3 px-3 pt-3">☰ FILTERS</Card.Title>
                 <Accordion className={styles.accordion} alwaysOpen>
@@ -83,7 +143,7 @@ const Filter = () => {
                                     >
                                         <Form.Check
                                             key={rating}
-                                            id={`checkbox-${index}`}
+                                            id={`checkbox-${rating}`}
                                             checked={selectedRatings.includes(rating)}
                                             onChange={() => handleRatingChange(rating)}
                                             className={styles.check}
@@ -106,7 +166,9 @@ const Filter = () => {
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
-                <Button className={styles.btn}>Apply</Button>
+                <Button onClick={handleApply} className={styles.btn}>
+                    Apply
+                </Button>
             </Card>
         </Container>
     );
