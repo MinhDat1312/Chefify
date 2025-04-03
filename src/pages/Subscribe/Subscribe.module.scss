@@ -1,0 +1,63 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #f24c86;
+    background-color: transparent;
+    color: #f24c86;
+
+    &.btnAdd {
+        width: 100%;
+        height: 40px;
+        border-radius: 10px;
+        background-color: #f44b86;
+        color: #ffffff;
+    }
+
+    &:hover {
+        opacity: 0.5 !important;
+        color: #ffffff;
+        border: 2px solid #f24c86 !important;
+    }
+
+    &:active {
+        background-color: #f24c86 !important;
+        color: #ffffff !important;
+        border: 2px solid #f24c86 !important;
+    }
+}
+
+.btnRadio {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    border: 1px solid #bcc2ca;
+    background-color: transparent;
+    color: black;
+    padding: 8px 16px;
+
+    :global(.form-check-input) {
+        cursor: pointer;
+        margin-left: 0px;
+        border: 2px solid #f24c86;
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        &:checked[type='radio'] {
+            --bs-form-check-bg-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-4%20-4%208%208%22%3E%3Ccircle%20r%3D%222%22%20fill%3D%22%23f24c86%22%2F%3E%3C%2Fsvg%3E');
+            background-color: transparent;
+        }
+    }
+
+    :global(.form-check-label) {
+        cursor: pointer;
+    }
+}

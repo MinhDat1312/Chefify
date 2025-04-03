@@ -226,35 +226,37 @@ const CookingGuide = () => {
                     </motion.div>
                 </Col>
             </Row>
-            <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-100"
-            >
-                <Form className="mt-5 w-100">
-                    <Form.Group>
-                        <Form.Label style={{ color: '#313943' }}>
-                            <h3 className="fw-bold">Cooking note</h3>
-                        </Form.Label>
-                        <div style={{ position: 'relative' }}>
-                            <Form.Control
-                                as="textarea"
-                                rows={6}
-                                placeholder="State your opinion about the article"
-                                className={`${styles.focus_border}`}
-                            />
-                            <Button
-                                type="submit"
-                                className={`${styles.btn} ${styles.btnAdd} ${styles.no_focus_border}`}
-                                style={{ width: '90px', position: 'absolute', right: '16px', top: '100px' }}
-                            >
-                                Send
-                            </Button>
-                        </div>
-                    </Form.Group>
-                </Form>
-            </motion.div>
+            <Row className="w-100 px-0 mt-5 mx-0">
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="w-100 px-0"
+                >
+                    <Form className="w-100">
+                        <Form.Group>
+                            <Form.Label style={{ color: '#313943' }}>
+                                <h3 className="fw-bold">Cooking note</h3>
+                            </Form.Label>
+                            <div style={{ position: 'relative' }}>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={6}
+                                    placeholder="State your opinion about the article"
+                                    className={`${styles.focus_border}`}
+                                />
+                                <Button
+                                    type="submit"
+                                    className={`${styles.btn} ${styles.btnAdd} ${styles.no_focus_border}`}
+                                    style={{ width: '90px', position: 'absolute', right: '16px', top: '100px' }}
+                                >
+                                    Send
+                                </Button>
+                            </div>
+                        </Form.Group>
+                    </Form>
+                </motion.div>
+            </Row>
         </Container>
     );
 };

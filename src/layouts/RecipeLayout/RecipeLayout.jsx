@@ -21,6 +21,14 @@ const RecipeLayout = ({ type, recipes }) => {
         }
     };
 
+    const handleNavigate = (recipe) => {
+        if (recipe.subscribe == 1) {
+            navigate(`/recipes/subscribe`);
+        } else {
+            navigate(`/recipes/${recipe.id}`);
+        }
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -96,7 +104,7 @@ const RecipeLayout = ({ type, recipes }) => {
                                     className={styles.card}
                                 >
                                     <Card.Img
-                                        onClick={() => navigate(`/recipes/${recipe.id}`)}
+                                        onClick={() => handleNavigate(recipe)}
                                         src={`/src/assets/images/recipes/${recipe.image}.png`}
                                         className="w-100"
                                         style={{ maxHeight: '200px' }}
@@ -172,7 +180,7 @@ const RecipeLayout = ({ type, recipes }) => {
                                     className={styles.cardEditor}
                                 >
                                     <Card.Img
-                                        onClick={() => navigate(`/recipes/${recipe.id}`)}
+                                        onClick={() => handleNavigate(recipe)}
                                         src={`/src/assets/images/recipes/${recipe.image}.png`}
                                         style={{ maxWidth: '40%', height: 'auto' }}
                                     />

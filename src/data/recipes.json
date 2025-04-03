@@ -29,7 +29,8 @@
         "image": "Snack cakes",
         "time": 45,
         "star": 4,
-        "type": "Roasted"
+        "type": "Roasted",
+        "subscribe": 1
     },
     {
         "id": 5,
@@ -45,7 +46,8 @@
         "image": "Bean, shrimp, and potato salad",
         "time": 15,
         "star": 4,
-        "type": "Baked"
+        "type": "Baked",
+        "subscribe": 1
     },
     {
         "id": 7,
@@ -117,7 +119,8 @@
             "desc": "Butter fried noodles: Savory noodles cooked in butter for a delicious and satisfying meal"
         },
         "star": 4,
-        "type": "Roasted"
+        "type": "Roasted",
+        "subscribe": 1
     },
     {
         "id": 13,
@@ -125,7 +128,8 @@
         "image": "Cucumber salad and cherry tomatoes",
         "time": 25,
         "star": 4,
-        "type": "Baked"
+        "type": "Baked",
+        "subscribe": 1
     },
     {
         "id": 14,
@@ -173,7 +177,8 @@
         "image": "Lotus delight salad (2)",
         "time": 20,
         "star": 5,
-        "type": "Baked"
+        "type": "Baked",
+        "subscribe": 1
     },
     {
         "id": 20,
@@ -181,6 +186,7 @@
         "image": "Avocado Salad",
         "time": 20,
         "star": 5,
-        "type": "Sauteed"
+        "type": "Sauteed",
+        "subscribe": 1
     }
 ]
