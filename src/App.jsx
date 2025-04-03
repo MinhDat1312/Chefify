@@ -30,8 +30,8 @@ function App() {
                     <Route path="/home" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/recipe_box" element={<RecipeBox />} />
-                    <Route path="/recipes/:id" element={<CookingGuide />} />
                     <Route path="/recipes" element={<Recipe />} />
+                    <Route path="/recipes/:id" element={<CookingGuide />} />
                     <Route path="/recipes/subscribe" element={<Subscribe />} />
                 </Routes>
             </FilterProvider>

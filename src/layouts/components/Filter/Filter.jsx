@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Accordion, Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import styles from './Filter.module.scss';
 import { Slider } from 'antd';
@@ -18,6 +18,12 @@ const Filter = () => {
         setSearchFilter,
         searchRecipe,
     } = useContext(FilterContext);
+
+    useEffect(() => {
+        setSelectedTypes([]);
+        setSelectedRatings([]);
+        setTimeRange([0, 0]);
+    }, []);
 
     const handleTypeChange = (type) => {
         setSelectedTypes((prev) => (prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]));

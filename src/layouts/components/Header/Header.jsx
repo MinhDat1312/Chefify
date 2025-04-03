@@ -123,7 +123,11 @@ const Header = () => {
                             >
                                 Login
                             </Button>
-                            <Button style={{ backgroundColor: '#ee4c85', color: 'white' }} className={styles.btn}>
+                            <Button
+                                onClick={() => navigate('/recipes/subscribe')}
+                                style={{ backgroundColor: '#ee4c85', color: 'white' }}
+                                className={styles.btn}
+                            >
                                 Subscribe
                             </Button>
                         </>
