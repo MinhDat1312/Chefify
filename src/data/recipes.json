@@ -53,7 +53,7 @@
         "image": "Sunny-side up fried eggs",
         "time": 45,
         "star": 3,
-        "type": "Streamed"
+        "type": "Steamed"
     },
     {
         "id": 8,
@@ -141,7 +141,7 @@
         "image": "Potato salad",
         "time": 20,
         "star": 1,
-        "type": "Streamed"
+        "type": "Steamed"
     },
     {
         "id": 16,

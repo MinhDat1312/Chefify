@@ -32,7 +32,7 @@ const Login = () => {
         const checkEmail = users.some((users) => formLogin.email == users.email);
         const checkPassword = users.some((users) => formLogin.password == users.password);
         if (checkEmail && checkPassword) {
-            navigate('/');
+            navigate('/home');
             setLogin(true);
         } else {
             setLogin(false);

@@ -96,7 +96,7 @@ const RecipeLayout = ({ type, recipes }) => {
                                     className={styles.card}
                                 >
                                     <Card.Img
-                                        onClick={() => navigate(`/cooking_guide/${recipe.id}`)}
+                                        onClick={() => navigate(`/recipes/${recipe.id}`)}
                                         src={`/src/assets/images/recipes/${recipe.image}.png`}
                                         className="w-100"
                                         style={{ maxHeight: '200px' }}
@@ -172,7 +172,7 @@ const RecipeLayout = ({ type, recipes }) => {
                                     className={styles.cardEditor}
                                 >
                                     <Card.Img
-                                        onClick={() => navigate(`/cooking_guide/${recipe.id}`)}
+                                        onClick={() => navigate(`/recipes/${recipe.id}`)}
                                         src={`/src/assets/images/recipes/${recipe.image}.png`}
                                         style={{ maxWidth: '40%', height: 'auto' }}
                                     />

@@ -6,8 +6,8 @@ import Login from './pages/Login/Login';
 import RecipeBox from './pages/RecipeBox/RecipeBox';
 import CookingGuide from './pages/CookingGuide/CookingGuide';
 import { useEffect } from 'react';
-import Search from './pages/Search/Search';
 import { FilterProvider } from './context/FilterContext';
+import Recipe from './pages/Recipe/Recipe';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -26,11 +26,11 @@ function App() {
             <ScrollToTop />
             <FilterProvider>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/recipe_box" element={<RecipeBox />} />
-                    <Route path="/cooking_guide/:id" element={<CookingGuide />} />
-                    <Route path="/search" element={<Search />} />
+                    <Route path="/recipes/:id" element={<CookingGuide />} />
+                    <Route path="/recipes" element={<Recipe />} />
                 </Routes>
             </FilterProvider>
             <Footer />

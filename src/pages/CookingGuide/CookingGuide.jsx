@@ -29,7 +29,7 @@ const CookingGuide = () => {
     return (
         <Container
             className="d-flex flex-column justify-content-center align-items-center px-0"
-            style={{ marginTop: '90px', marginBottom: '48px', maxWidth: '1366px' }}
+            style={{ marginTop: '108px', marginBottom: '48px', maxWidth: '1366px' }}
         >
             {!success && (
                 <div

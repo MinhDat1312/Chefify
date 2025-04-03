@@ -52,7 +52,7 @@ const RecipeBox = () => {
     return (
         <Container
             className="d-flex flex-column justify-content-start align-items-start px-0"
-            style={{ marginTop: '90px', marginBottom: '48px', maxWidth: '1366px' }}
+            style={{ marginTop: '108px', marginBottom: '48px', maxWidth: '1366px' }}
         >
             <div>
                 <motion.div

@@ -1,5 +1,5 @@
 import { Button, Container, Dropdown, Form } from 'react-bootstrap';
-import styles from './Search.module.scss';
+import styles from './Recipe.module.scss';
 import Filter from '../../layouts/components/Filter/Filter';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
@@ -7,8 +7,9 @@ import recipes from '../../data/recipes.json';
 import RecipeLayout from '../../layouts/RecipeLayout/RecipeLayout';
 import Pagination from '../../layouts/components/Pagination/Pagination';
 import { FilterContext } from '../../context/FilterContext';
+import { motion } from 'framer-motion';
 
-const Search = () => {
+const Recipe = () => {
     const { search, navigate } = useContext(ChefifyConText);
     const { searchFilter, setSearchFilter, searchRecipe, setSearchRecipe } = useContext(FilterContext);
     const [selected, setSelected] = useState('Sort');
@@ -54,13 +55,19 @@ const Search = () => {
         <Container
             ref={scrollRef}
             className="d-flex justify-content-start align-items-start px-0 gap-4"
-            style={{ marginTop: '90px', marginBottom: '48px', maxWidth: '1366px' }}
+            style={{ marginTop: '108px', marginBottom: '48px', maxWidth: '1366px' }}
         >
             <Filter />
             <div style={{ width: '75%' }}>
                 {currentRecipePage.length > 0 ? (
                     <>
-                        <div className="d-flex justify-content-between align-items-center">
+                        <motion.div
+                            initial={{ opacity: 0, y: -100 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="d-flex justify-content-between align-items-center"
+                        >
                             <h2 className="text-center fw-bold">
                                 {search} ({searchFilter.length})
                             </h2>
@@ -82,7 +89,7 @@ const Search = () => {
                                     ))}
                                 </Dropdown.Menu>
                             </Dropdown>
-                        </div>
+                        </motion.div>
                         <div style={{ marginTop: '-32px', marginBottom: '-56px' }}>
                             <RecipeLayout type={''} recipes={currentRecipePage} />
                         </div>
@@ -128,4 +135,4 @@ const Search = () => {
     );
 };
 
-export default Search;
+export default Recipe;

@@ -1,7 +1,7 @@
 import { Button, Container, Form, InputGroup, Nav, Navbar } from 'react-bootstrap';
 import styles from './Header.module.scss';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ChefifyConText } from '../../../context/ChefifyContext';
 
 const Header = () => {
@@ -15,8 +15,12 @@ const Header = () => {
 
     const handleSearch = () => {
         setSearch(ref.current.value);
-        navigate('/search');
+        navigate('/recipes');
     };
+
+    useEffect(() => {
+        ref.current.value = '';
+    }, [loc.pathname]);
 
     return (
         <div>
@@ -30,7 +34,7 @@ const Header = () => {
                 <Container className="px-0 ms-5 me-0">
                     <Navbar.Brand style={{ cursor: 'pointer' }}>
                         <img
-                            onClick={() => navigate('/')}
+                            onClick={() => navigate('/home')}
                             src="/src/assets/images/Group 9.png"
                             className="d-inline-block align-top"
                             alt="Chefify logo"
@@ -55,11 +59,11 @@ const Header = () => {
                             {['What to cook', 'Recipes', 'Ingredients', 'Occasinos', 'About us'].map((item, index) => {
                                 const path =
                                     item === 'What to cook'
-                                        ? '/'
+                                        ? '/home'
                                         : item === 'About us'
                                         ? '/about'
                                         : `/${item.toLowerCase()}`;
-                                const isFocus = loc.pathname == path;
+                                const isFocus = loc.pathname.startsWith(path);
                                 return (
                                     <Nav.Link
                                         key={index}
