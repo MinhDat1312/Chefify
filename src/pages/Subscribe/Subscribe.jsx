@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import { PiGreaterThan } from 'react-icons/pi';
 
 const Subscribe = () => {
-    const { navigate } = useContext(ChefifyConText);
+    const { navigate, login, subscribe, setSubscribe } = useContext(ChefifyConText);
     const [selectedRadio, setSelectedRadio] = useState('$2/month (Billed every 4 weeks)');
     const location = useLocation();
 
@@ -18,6 +18,20 @@ const Subscribe = () => {
     const handleSelectedRadio = (e) => {
         setSelectedRadio(e.target.value);
     };
+
+    const handleSubscribe = (type) => {
+        if (login) {
+            if (type == 'week') {
+                setSubscribe('week');
+            } else {
+                setSubscribe(selectedRadio.split('/')[1].split(' ')[0]);
+            }
+        } else {
+            navigate('/login');
+        }
+    };
+
+    console.log(subscribe);
 
     return (
         <>
@@ -87,7 +101,10 @@ const Subscribe = () => {
                                 <span>Billed as $1 every 4 weeks for the first year</span>
                             </div>
                             <div className="d-flex flex-column gap-3">
-                                <Button className={`${styles.btn} ${styles.btnAdd}`}>
+                                <Button
+                                    onClick={() => handleSubscribe('week')}
+                                    className={`${styles.btn} ${styles.btnAdd}`}
+                                >
                                     <div className="d-flex justify-content-center align-items-center">
                                         <MdOutlinePayments className="fs-5" />
                                     </div>
@@ -223,7 +240,7 @@ const Subscribe = () => {
                             })}
                         </div>
                         <div className="d-flex flex-column gap-3 w-25">
-                            <Button className={`${styles.btn} ${styles.btnAdd}`}>
+                            <Button onClick={() => handleSubscribe('')} className={`${styles.btn} ${styles.btnAdd}`}>
                                 <div className="d-flex justify-content-center align-items-center">
                                     <MdOutlinePayments className="fs-5" />
                                 </div>

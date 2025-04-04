@@ -5,21 +5,37 @@ import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import { useContext, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
+import firebase from '../../config/firebaseConfig';
+import Loading from '../components/Loading';
 
 const LoginModal = () => {
     const { loginModal, setLoginModal, setLogin, users } = useContext(ChefifyConText);
     const [email, setEmail] = useState('');
     const [submit, setSubmit] = useState(true);
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (email != '' && users.some((user) => user.email == email)) {
-            setLogin(true);
-            setLoginModal(false);
-        } else {
+        try {
+            setLoading(true);
+
+            const ref = firebase.database().ref('user');
+            const snapshot = await ref.orderByChild('email').equalTo(email).once('value');
+
+            if (snapshot.exists()) {
+                setLogin(true);
+                setLoginModal(false);
+            } else {
+                setSubmit(false);
+                setTimeout(() => setSubmit(true), 3000);
+            }
+        } catch (error) {
+            console.error(error);
             setSubmit(false);
             setTimeout(() => setSubmit(true), 3000);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,6 +61,7 @@ const LoginModal = () => {
                     </Toast>
                 </div>
             )}
+            <Loading loading={loading} />
             <Modal show={loginModal} onHide={() => setLoginModal(false)} centered size="lg">
                 <div className="p-0 d-flex h-100">
                     <div

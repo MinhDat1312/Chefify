@@ -7,11 +7,14 @@ import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import CheckBox from '../../layouts/components/CheckBox/CheckBox';
 import { ChefifyConText } from '../../context/ChefifyContext';
+import firebase from '../../config/firebaseConfig';
+import Loading from '../../layouts/components/Loading';
 
 let checkSubmit = 0;
 
 const Login = () => {
     const { login, setLogin, users, setUsers } = useContext(ChefifyConText);
+    const [loading, setLoading] = useState(false);
     const [formLogin, setFormLogin] = useState({
         username: {
             firstName: '',
@@ -25,48 +28,93 @@ const Login = () => {
     const containerRef = useRef();
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         checkSubmit = 2;
         e.preventDefault();
 
-        const checkEmail = users.some((users) => formLogin.email == users.email);
-        const checkPassword = users.some((users) => formLogin.password == users.password);
-        if (checkEmail && checkPassword) {
-            navigate('/home');
-            setLogin(true);
-        } else {
+        try {
+            setLoading(true);
+
+            const response = await firebase.auth().signInWithEmailAndPassword(formLogin.email, formLogin.password);
+            if (response.user) {
+                navigate(-1);
+
+                setLogin(true);
+                setFormLogin({
+                    username: {
+                        firstName: '',
+                        lastName: '',
+                    },
+                    email: '',
+                    password: '',
+                });
+            } else {
+                setLogin(false);
+                setSubmit(true);
+                setTimeout(() => {
+                    checkSubmit = 0;
+                    setSubmit(false);
+                }, 3000);
+            }
+        } catch (error) {
+            console.error(error);
             setLogin(false);
             setSubmit(true);
             setTimeout(() => {
                 checkSubmit = 0;
                 setSubmit(false);
             }, 3000);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
         checkSubmit = 1;
-        setSubmit(true);
-        if (users.some((user) => user.email == formLogin.email)) {
+
+        try {
+            setSubmit(true);
+            setLoading(true);
+
+            const response = await firebase.auth().createUserWithEmailAndPassword(formLogin.email, formLogin.password);
+            if (response.user) {
+                await response.user.updateProfile({
+                    displayName: formLogin.username.firstName + formLogin.username.lastName,
+                });
+                const uid = response.user.uid;
+                const userRef = firebase.database().ref('user/' + uid);
+                await userRef.set({
+                    uid: uid,
+                    email: formLogin.email,
+                    username: formLogin.username.firstName + formLogin.username.lastName,
+                });
+
+                setFail(false);
+                setFormLogin({
+                    username: {
+                        firstName: '',
+                        lastName: '',
+                    },
+                    email: '',
+                    password: '',
+                });
+
+                containerRef.current.classList.remove(styles.active);
+
+                setTimeout(() => {
+                    checkSubmit = 0;
+                    setSubmit(false);
+                }, 3000);
+            } else {
+                setFail(true);
+            }
+        } catch (error) {
+            console.error(error);
             setFail(true);
-        } else {
-            setFail(false);
-            setUsers([...users, { id: Date.now(), ...formLogin }]);
-            setFormLogin({
-                username: {
-                    firstName: '',
-                    lastName: '',
-                },
-                email: '',
-                password: '',
-            });
-            containerRef.current.classList.remove(styles.active);
+        } finally {
+            setLoading(false);
         }
-        setTimeout(() => {
-            checkSubmit = 0;
-            setSubmit(false);
-        }, 3000);
     };
 
     const handleChangeLogin = (e) => {
@@ -141,6 +189,7 @@ const Login = () => {
                     </Toast>
                 </div>
             )}
+            <Loading loading={loading} />
             <Container ref={containerRef} className={styles.loginContainer}>
                 <Card className={styles.loginCard}>
                     <Card.Body>
