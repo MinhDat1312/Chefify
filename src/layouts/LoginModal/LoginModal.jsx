@@ -5,7 +5,6 @@ import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import { useContext, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
-import firebase from '../../config/firebaseConfig';
 import Loading from '../components/Loading';
 import axios from 'axios';
 
@@ -25,9 +24,11 @@ const LoginModal = () => {
         };
 
         try {
-            const response = await axios.get(`${url}/api/user/list`);
+            const response = await axios.post(`${url}/api/user/login`, { email: email, password: '' });
 
-            if (response.data.success && response.data.users.some((user) => user.email == email)) {
+            if (response.data.success) {
+                localStorage.setItem('token', response.data.token);
+
                 setLogin(true);
                 setLoginModal(false);
             } else {

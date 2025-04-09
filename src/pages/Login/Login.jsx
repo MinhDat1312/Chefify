@@ -7,7 +7,6 @@ import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { RiAppleLine } from 'react-icons/ri';
 import CheckBox from '../../layouts/components/CheckBox/CheckBox';
 import { ChefifyConText } from '../../context/ChefifyContext';
-import firebase from '../../config/firebaseConfig';
 import Loading from '../../layouts/components/Loading';
 import axios from 'axios';
 
@@ -23,6 +22,7 @@ const Login = () => {
         },
         email: '',
         password: '',
+        role: 'user',
     });
     const [submit, setSubmit] = useState(false);
     const [fail, setFail] = useState(false);
@@ -34,6 +34,7 @@ const Login = () => {
             username: { firstName: '', lastName: '' },
             email: '',
             password: '',
+            role: 'user',
         });
     };
 
@@ -52,18 +53,17 @@ const Login = () => {
         };
 
         try {
-            const response = await axios.get(`${url}/api/user/list`);
+            const response = await axios.post(`${url}/api/user/login`, {
+                email: formLogin.email,
+                password: formLogin.password,
+            });
             if (response.data.success) {
-                const user = response.data.users.find(
-                    (user) => user.email == formLogin.email && user.password == formLogin.password,
-                );
+                localStorage.setItem('token', response.data.token);
 
-                if (user) {
-                    setLogin(true);
-                    resetForm();
-                    navigate(-1);
-                    return;
-                }
+                setLogin(true);
+                resetForm();
+                navigate(-1);
+                return;
             }
             handleError();
         } catch (error) {

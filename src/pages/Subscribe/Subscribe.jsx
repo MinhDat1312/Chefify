@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
 import { useLocation } from 'react-router-dom';
 import { PiGreaterThan } from 'react-icons/pi';
-import firebase from '../../config/firebaseConfig';
 
 const Subscribe = () => {
     const { navigate, login, userID, setUserID } = useContext(ChefifyConText);
@@ -34,7 +33,7 @@ const Subscribe = () => {
         if (login) {
             await axios
                 .post(
-                    'http://localhost:5000/api/v1/create-subscribe-checkout-session',
+                    'http://localhost:4000/api/v1/create-subscribe-checkout-session',
                     {
                         plan: plan,
                         customerID: userID,
@@ -258,7 +257,7 @@ const Subscribe = () => {
                             Enjoy thousands of delicious recipes for every taste, plus advice and inspiration daily.
                         </span>
                         <div className="d-flex flex-column w-25 gap-2">
-                            {['$2/month (Billed every 4 weeks)', '20/year (Billed one annually)'].map((item, index) => {
+                            {['$2/month (Billed every 4 weeks)', '$20/year (Billed one annually)'].map((item, index) => {
                                 return (
                                     <Form.Check
                                         key={index}
