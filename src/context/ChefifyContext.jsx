@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export const ChefifyConText = createContext();
 
-const usersData = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
 const savedRecipesData = localStorage.getItem('savedRecipes') ? JSON.parse(localStorage.getItem('savedRecipes')) : [];
 const folderRecipesData = localStorage.getItem('folderRecipes')
     ? JSON.parse(localStorage.getItem('folderRecipes'))
@@ -15,17 +14,14 @@ const genevieveRecipesData = localStorage.getItem('genevieveRecipes')
 export const ChefifyProvider = ({ children }) => {
     const [loginModal, setLoginModal] = useState(false);
     const [login, setLogin] = useState(false);
-    const [users, setUsers] = useState(usersData);
+    const [userID, setUserID] = useState('');
     const [savedRecipes, setSavedRecipes] = useState(savedRecipesData);
     const [folderRecipes, setFolderRecipes] = useState(folderRecipesData);
     const [genevieveRecipes, setGenevieveRecipes] = useState(genevieveRecipesData);
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [subscribe, setSubscribe] = useState('');
-
-    useEffect(() => {
-        localStorage.setItem('users', JSON.stringify(users));
-    }, [users]);
+    const url = 'http://localhost:4000';
 
     useEffect(() => {
         localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
@@ -44,8 +40,8 @@ export const ChefifyProvider = ({ children }) => {
         setLoginModal,
         login,
         setLogin,
-        users,
-        setUsers,
+        userID,
+        setUserID,
         savedRecipes,
         setSavedRecipes,
         folderRecipes,
@@ -57,6 +53,7 @@ export const ChefifyProvider = ({ children }) => {
         setSearch,
         subscribe,
         setSubscribe,
+        url,
     };
 
     return <ChefifyConText.Provider value={value}>{children}</ChefifyConText.Provider>;

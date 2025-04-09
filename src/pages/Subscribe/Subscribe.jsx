@@ -3,15 +3,26 @@ import styles from './Subscribe.module.scss';
 import { motion } from 'framer-motion';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { MdOutlinePayments } from 'react-icons/md';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
 import { useLocation } from 'react-router-dom';
 import { PiGreaterThan } from 'react-icons/pi';
+import firebase from '../../config/firebaseConfig';
 
 const Subscribe = () => {
-    const { navigate, login, subscribe, setSubscribe } = useContext(ChefifyConText);
+    const { navigate, login, userID, setUserID } = useContext(ChefifyConText);
     const [selectedRadio, setSelectedRadio] = useState('$2/month (Billed every 4 weeks)');
     const location = useLocation();
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                setUserID(user.uid);
+            } else {
+                setUserID('');
+            }
+        });
+    }, [userID]);
 
     const paths = location.pathname.split('/').filter((path) => path);
 
@@ -19,19 +30,43 @@ const Subscribe = () => {
         setSelectedRadio(e.target.value);
     };
 
-    const handleSubscribe = (type) => {
+    const handleSubscribe = async (plan) => {
         if (login) {
-            if (type == 'week') {
-                setSubscribe('week');
-            } else {
-                setSubscribe(selectedRadio.split('/')[1].split(' ')[0]);
-            }
+            await axios
+                .post(
+                    'http://localhost:5000/api/v1/create-subscribe-checkout-session',
+                    {
+                        plan: plan,
+                        customerID: userID,
+                    },
+                    {
+                        headers: { 'Content-Type': 'application/json' },
+                        withCredentials: false,
+                    },
+                )
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    } else {
+                        return res.json().then((json) => Promise.reject(json));
+                    }
+                })
+                .then(({ session }) => {
+                    window.location = session.url;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            // if (type == 'week') {
+            //     setSubscribe('week');
+            // } else {
+            //     setSubscribe(selectedRadio.split('/')[1].split(' ')[0]);
+            // }
         } else {
             navigate('/login');
         }
     };
-
-    console.log(subscribe);
 
     return (
         <>

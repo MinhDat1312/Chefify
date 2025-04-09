@@ -9,11 +9,12 @@ import CheckBox from '../../layouts/components/CheckBox/CheckBox';
 import { ChefifyConText } from '../../context/ChefifyContext';
 import firebase from '../../config/firebaseConfig';
 import Loading from '../../layouts/components/Loading';
+import axios from 'axios';
 
 let checkSubmit = 0;
 
 const Login = () => {
-    const { login, setLogin, users, setUsers } = useContext(ChefifyConText);
+    const { login, setLogin, url } = useContext(ChefifyConText);
     const [loading, setLoading] = useState(false);
     const [formLogin, setFormLogin] = useState({
         username: {
@@ -28,42 +29,46 @@ const Login = () => {
     const containerRef = useRef();
     const navigate = useNavigate();
 
+    const resetForm = () => {
+        setFormLogin({
+            username: { firstName: '', lastName: '' },
+            email: '',
+            password: '',
+        });
+    };
+
     const handleLogin = async (e) => {
         checkSubmit = 2;
         e.preventDefault();
+        setLoading(true);
 
-        try {
-            setLoading(true);
-
-            const response = await firebase.auth().signInWithEmailAndPassword(formLogin.email, formLogin.password);
-            if (response.user) {
-                navigate(-1);
-
-                setLogin(true);
-                setFormLogin({
-                    username: {
-                        firstName: '',
-                        lastName: '',
-                    },
-                    email: '',
-                    password: '',
-                });
-            } else {
-                setLogin(false);
-                setSubmit(true);
-                setTimeout(() => {
-                    checkSubmit = 0;
-                    setSubmit(false);
-                }, 3000);
-            }
-        } catch (error) {
-            console.error(error);
+        const handleError = () => {
             setLogin(false);
             setSubmit(true);
             setTimeout(() => {
                 checkSubmit = 0;
                 setSubmit(false);
             }, 3000);
+        };
+
+        try {
+            const response = await axios.get(`${url}/api/user/list`);
+            if (response.data.success) {
+                const user = response.data.users.find(
+                    (user) => user.email == formLogin.email && user.password == formLogin.password,
+                );
+
+                if (user) {
+                    setLogin(true);
+                    resetForm();
+                    navigate(-1);
+                    return;
+                }
+            }
+            handleError();
+        } catch (error) {
+            console.error(error);
+            handleError();
         } finally {
             setLoading(false);
         }
@@ -72,46 +77,41 @@ const Login = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         checkSubmit = 1;
+        setSubmit(true);
+        setLoading(true);
+
+        const handleError = () => {
+            setFail(true);
+            setTimeout(() => {
+                checkSubmit = 0;
+                setSubmit(false);
+            }, 3000);
+        };
 
         try {
-            setSubmit(true);
-            setLoading(true);
+            const { data } = await axios.get(`${url}/api/user/list`);
+            const isEmail = data.users?.find((user) => user.email == formLogin.email);
 
-            const response = await firebase.auth().createUserWithEmailAndPassword(formLogin.email, formLogin.password);
-            if (response.user) {
-                await response.user.updateProfile({
-                    displayName: formLogin.username.firstName + formLogin.username.lastName,
-                });
-                const uid = response.user.uid;
-                const userRef = firebase.database().ref('user/' + uid);
-                await userRef.set({
-                    uid: uid,
-                    email: formLogin.email,
-                    username: formLogin.username.firstName + formLogin.username.lastName,
-                });
+            if (!isEmail) {
+                const response = await axios.post(`${url}/api/user/add`, formLogin);
 
-                setFail(false);
-                setFormLogin({
-                    username: {
-                        firstName: '',
-                        lastName: '',
-                    },
-                    email: '',
-                    password: '',
-                });
-
-                containerRef.current.classList.remove(styles.active);
-
-                setTimeout(() => {
-                    checkSubmit = 0;
-                    setSubmit(false);
-                }, 3000);
+                if (response.data.success) {
+                    setFail(false);
+                    resetForm();
+                    containerRef.current.classList.remove(styles.active);
+                    setTimeout(() => {
+                        checkSubmit = 0;
+                        setSubmit(false);
+                    }, 3000);
+                } else {
+                    handleError();
+                }
             } else {
-                setFail(true);
+                handleError();
             }
         } catch (error) {
             console.error(error);
-            setFail(true);
+            handleError();
         } finally {
             setLoading(false);
         }

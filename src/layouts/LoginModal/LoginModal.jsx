@@ -7,33 +7,35 @@ import { useContext, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
 import firebase from '../../config/firebaseConfig';
 import Loading from '../components/Loading';
+import axios from 'axios';
 
 const LoginModal = () => {
-    const { loginModal, setLoginModal, setLogin, users } = useContext(ChefifyConText);
+    const { loginModal, setLoginModal, setLogin, users, url } = useContext(ChefifyConText);
     const [email, setEmail] = useState('');
     const [submit, setSubmit] = useState(true);
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
+        const handleError = () => {
+            setSubmit(false);
+            setTimeout(() => setSubmit(true), 3000);
+        };
 
         try {
-            setLoading(true);
+            const response = await axios.get(`${url}/api/user/list`);
 
-            const ref = firebase.database().ref('user');
-            const snapshot = await ref.orderByChild('email').equalTo(email).once('value');
-
-            if (snapshot.exists()) {
+            if (response.data.success && response.data.users.some((user) => user.email == email)) {
                 setLogin(true);
                 setLoginModal(false);
             } else {
-                setSubmit(false);
-                setTimeout(() => setSubmit(true), 3000);
+                handleError();
             }
         } catch (error) {
             console.error(error);
-            setSubmit(false);
-            setTimeout(() => setSubmit(true), 3000);
+            handleError();
         } finally {
             setLoading(false);
         }
