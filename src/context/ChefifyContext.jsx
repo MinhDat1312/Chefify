@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -14,14 +15,47 @@ const genevieveRecipesData = localStorage.getItem('genevieveRecipes')
 export const ChefifyProvider = ({ children }) => {
     const [loginModal, setLoginModal] = useState(false);
     const [login, setLogin] = useState(false);
-    const [userID, setUserID] = useState('');
+    const [user, setUser] = useState(null);
     const [savedRecipes, setSavedRecipes] = useState(savedRecipesData);
     const [folderRecipes, setFolderRecipes] = useState(folderRecipesData);
     const [genevieveRecipes, setGenevieveRecipes] = useState(genevieveRecipesData);
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [subscribe, setSubscribe] = useState('');
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const url = 'http://localhost:4000';
+
+    useEffect(() => {
+        const getCurrentUser = async () => {
+            try {
+                if (!token) {
+                    setUser(null);
+                    return;
+                }
+
+                const response = await axios.get(`${url}/api/user/me`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                setUser(response.data.user);
+            } catch (error) {
+                console.error(error);
+                setUser(null);
+            }
+        };
+
+        getCurrentUser();
+    }, [token]);
+
+    useEffect(() => {
+        if (user != null) {
+            setLogin(true);
+        } else {
+            setLogin(false);
+        }
+    }, [user]);
 
     useEffect(() => {
         localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
@@ -40,8 +74,8 @@ export const ChefifyProvider = ({ children }) => {
         setLoginModal,
         login,
         setLogin,
-        userID,
-        setUserID,
+        user,
+        setUser,
         savedRecipes,
         setSavedRecipes,
         folderRecipes,
@@ -54,6 +88,7 @@ export const ChefifyProvider = ({ children }) => {
         subscribe,
         setSubscribe,
         url,
+        setToken,
     };
 
     return <ChefifyConText.Provider value={value}>{children}</ChefifyConText.Provider>;

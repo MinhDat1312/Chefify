@@ -7,7 +7,7 @@ import { ChefifyConText } from '../../context/ChefifyContext';
 
 const RecipeLayout = ({ type, recipes }) => {
     const [success, setSuccess] = useState(true);
-    const { login, savedRecipes, setSavedRecipes, navigate } = useContext(ChefifyConText);
+    const { login, savedRecipes, setSavedRecipes, navigate, user } = useContext(ChefifyConText);
 
     const handleSaveRecipe = (recipe) => {
         if (!login) {
@@ -22,10 +22,17 @@ const RecipeLayout = ({ type, recipes }) => {
     };
 
     const handleNavigate = (recipe) => {
-        if (recipe.subscribe == 1) {
-            navigate(`/recipes/subscribe`);
-        } else {
+        const isSubscribed = user?.subscription;
+        const isFreeRecipe = recipe.star <= 3;
+
+        if (isFreeRecipe) {
             navigate(`/recipes/${recipe.id}`);
+        } else {
+            if (isSubscribed) {
+                navigate(`/recipes/${recipe.id}`);
+            } else {
+                navigate(`/recipes/subscribe`);
+            }
         }
     };
 

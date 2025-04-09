@@ -13,7 +13,7 @@ import axios from 'axios';
 let checkSubmit = 0;
 
 const Login = () => {
-    const { login, setLogin, url } = useContext(ChefifyConText);
+    const { login, setLogin, url, setToken } = useContext(ChefifyConText);
     const [loading, setLoading] = useState(false);
     const [formLogin, setFormLogin] = useState({
         username: {
@@ -59,6 +59,7 @@ const Login = () => {
             });
             if (response.data.success) {
                 localStorage.setItem('token', response.data.token);
+                setToken(response.data.token);
 
                 setLogin(true);
                 resetForm();

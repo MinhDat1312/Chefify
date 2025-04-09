@@ -7,61 +7,40 @@ import { useContext, useEffect, useState } from 'react';
 import { ChefifyConText } from '../../context/ChefifyContext';
 import { useLocation } from 'react-router-dom';
 import { PiGreaterThan } from 'react-icons/pi';
+import axios from 'axios';
 
 const Subscribe = () => {
-    const { navigate, login, userID, setUserID } = useContext(ChefifyConText);
-    const [selectedRadio, setSelectedRadio] = useState('$2/month (Billed every 4 weeks)');
+    const { navigate, login, user, url } = useContext(ChefifyConText);
+    const [selectedRadio, setSelectedRadio] = useState('month');
     const location = useLocation();
-
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                setUserID(user.uid);
-            } else {
-                setUserID('');
-            }
-        });
-    }, [userID]);
 
     const paths = location.pathname.split('/').filter((path) => path);
 
     const handleSelectedRadio = (e) => {
-        setSelectedRadio(e.target.value);
+        setSelectedRadio(e.target.value.split('/')[1].split(' ')[0]);
     };
 
     const handleSubscribe = async (plan) => {
         if (login) {
-            await axios
-                .post(
-                    'http://localhost:4000/api/v1/create-subscribe-checkout-session',
+            try {
+                const response = await axios.post(
+                    `${url}/api/subscribe/checkout-session`,
                     {
                         plan: plan,
-                        customerID: userID,
+                        customer: user,
                     },
                     {
                         headers: { 'Content-Type': 'application/json' },
                         withCredentials: false,
                     },
-                )
-                .then((res) => {
-                    if (res.ok) {
-                        return res.json();
-                    } else {
-                        return res.json().then((json) => Promise.reject(json));
-                    }
-                })
-                .then(({ session }) => {
-                    window.location = session.url;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+                );
 
-            // if (type == 'week') {
-            //     setSubscribe('week');
-            // } else {
-            //     setSubscribe(selectedRadio.split('/')[1].split(' ')[0]);
-            // }
+                const { session } = response.data;
+
+                window.location = session.url;
+            } catch (error) {
+                console.error(error);
+            }
         } else {
             navigate('/login');
         }
@@ -257,24 +236,29 @@ const Subscribe = () => {
                             Enjoy thousands of delicious recipes for every taste, plus advice and inspiration daily.
                         </span>
                         <div className="d-flex flex-column w-25 gap-2">
-                            {['$2/month (Billed every 4 weeks)', '$20/year (Billed one annually)'].map((item, index) => {
-                                return (
-                                    <Form.Check
-                                        key={index}
-                                        checked={selectedRadio == item}
-                                        name="radio"
-                                        type="radio"
-                                        label={item}
-                                        value={item}
-                                        id={`radio-${index}`}
-                                        className={styles.btnRadio}
-                                        onChange={(e) => handleSelectedRadio(e)}
-                                    />
-                                );
-                            })}
+                            {['$2/month (Billed every 4 weeks)', '$20/year (Billed one annually)'].map(
+                                (item, index) => {
+                                    return (
+                                        <Form.Check
+                                            key={index}
+                                            checked={selectedRadio == item.split('/')[1].split(' ')[0]}
+                                            name="radio"
+                                            type="radio"
+                                            label={item}
+                                            value={item}
+                                            id={`radio-${index}`}
+                                            className={styles.btnRadio}
+                                            onChange={(e) => handleSelectedRadio(e)}
+                                        />
+                                    );
+                                },
+                            )}
                         </div>
                         <div className="d-flex flex-column gap-3 w-25">
-                            <Button onClick={() => handleSubscribe('')} className={`${styles.btn} ${styles.btnAdd}`}>
+                            <Button
+                                onClick={() => handleSubscribe(selectedRadio)}
+                                className={`${styles.btn} ${styles.btnAdd}`}
+                            >
                                 <div className="d-flex justify-content-center align-items-center">
                                     <MdOutlinePayments className="fs-5" />
                                 </div>
